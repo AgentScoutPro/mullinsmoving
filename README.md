@@ -1,6 +1,6 @@
 # Mullins Moving
 
-Production homepage for Mullins Moving, built as a cinematic React/Vite website.
+The new updated Mullins Moving v2.0 production homepage, built as a cinematic React/Vite website.
 
 ## Commands
 
