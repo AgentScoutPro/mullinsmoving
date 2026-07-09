@@ -1,11 +1,17 @@
+import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import heroImage from "../assets/mullins-hero-v2.jpeg";
 
 const heroEase = [0.2, 0.8, 0.2, 1] as const;
 
 export function ChapterOneHero() {
+  const heroRef = useRef<HTMLElement>(null);
   const prefersReducedMotion = useReducedMotion();
   const { scrollY } = useScroll();
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
   const headerBackground = useTransform(
     scrollY,
     [0, 160],
@@ -16,6 +22,11 @@ export function ChapterOneHero() {
     [0, 160],
     ["rgba(255, 241, 212, 0)", "rgba(255, 241, 212, 0.12)"],
   );
+  const mediaScale = useTransform(scrollYProgress, [0, 0.72], prefersReducedMotion ? [1, 1] : [1.04, 1]);
+  const mediaOpacity = useTransform(scrollYProgress, [0, 0.72, 1], [1, 1, 0.62]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.56, 0.92], [1, 1, 0]);
+  const contentY = useTransform(scrollYProgress, [0, 0.92], prefersReducedMotion ? [0, 0] : [0, -38]);
+  const cueOpacity = useTransform(scrollYProgress, [0, 0.42, 0.7], [1, 1, 0]);
 
   const fadeUp = {
     hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 40 },
@@ -31,7 +42,7 @@ export function ChapterOneHero() {
   };
 
   return (
-    <section className="hero-shell" aria-labelledby="chapter-one-title">
+    <section ref={heroRef} className="hero-shell" aria-labelledby="chapter-one-title">
       <motion.header
         className="hero-header"
         initial={{ opacity: 0 }}
@@ -58,95 +69,113 @@ export function ChapterOneHero() {
         </a>
       </motion.header>
 
-      <motion.div
-        className="hero-image"
-        initial={{ opacity: 0, scale: prefersReducedMotion ? 1 : 1.015 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: prefersReducedMotion ? 0.01 : 1.35, ease: heroEase }}
-        aria-hidden="true"
-      >
-        <img src={heroImage} alt="" />
-      </motion.div>
-
-      <div className="hero-gradient" aria-hidden="true" />
-
-      <div className="hero-content">
-        <motion.p
-          className="hero-eyebrow"
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={0}
-        >
-          Arizona&apos;s White Glove Moving Experience
-        </motion.p>
-
-        <motion.h1
-          id="chapter-one-title"
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={0}
-        >
-          Every Move
-          <br />
-          Begins With <span>Trust.</span>
-        </motion.h1>
-
-        <motion.p
-          className="hero-copy"
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={0.25}
-        >
-          From Arizona homes to destinations across the country and around the world, Mullins Moving
-          protects every detail of the journey.
-        </motion.p>
-
+      <div className="hero-stage">
         <motion.div
-          className="services-bar"
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={0.38}
-          aria-label="Featured moving services"
+          className="hero-media"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: prefersReducedMotion ? 0.01 : 1.15, ease: heroEase }}
+          style={{ scale: mediaScale, opacity: mediaOpacity }}
+          aria-hidden="true"
         >
-          <span>White Glove Moving</span>
-          <b aria-hidden="true">•</b>
-          <span>Interstate Relocation</span>
-          <b aria-hidden="true">•</b>
-          <span>International Moving</span>
+          {prefersReducedMotion ? (
+            <img className="hero-poster" src={heroImage} alt="" />
+          ) : (
+            <video
+              className="hero-video"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster={heroImage}
+            >
+              <source src="/videos/mullins-hero-scroll.mp4" type="video/mp4" />
+            </video>
+          )}
+        </motion.div>
+
+        <div className="hero-gradient" aria-hidden="true" />
+
+        <motion.div className="hero-content" style={{ opacity: contentOpacity, y: contentY }}>
+          <motion.p
+            className="hero-eyebrow"
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.18}
+          >
+            Arizona&apos;s White Glove Moving Experience
+          </motion.p>
+
+          <motion.h1
+            id="chapter-one-title"
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.32}
+          >
+            Every Move
+            <br />
+            Begins With <span>Trust.</span>
+          </motion.h1>
+
+          <motion.p
+            className="hero-copy"
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.52}
+          >
+            For over 20 years, we&apos;ve helped families, executives, and businesses move
+            forward—carefully, professionally, and without compromise.
+          </motion.p>
+
+          <motion.div
+            className="services-bar"
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.68}
+            aria-label="Featured moving services"
+          >
+            <span>White Glove Moving</span>
+            <b aria-hidden="true">|</b>
+            <span>Interstate Relocation</span>
+            <b aria-hidden="true">|</b>
+            <span>International Moving</span>
+          </motion.div>
+
+          <motion.div
+            className="hero-actions"
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.82}
+          >
+            <a className="button button-primary" href="#consultation">
+              Request Your Move Consultation
+            </a>
+            <a className="watch-link" href="#story">
+              <span className="play-icon" aria-hidden="true" />
+              Watch Our Story
+            </a>
+          </motion.div>
         </motion.div>
 
         <motion.div
-          className="hero-actions"
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={0.5}
+          className="scroll-indicator"
+          style={{ opacity: cueOpacity }}
+          animate={prefersReducedMotion ? undefined : { y: [0, 8, 0] }}
+          transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+          aria-hidden="true"
         >
-          <a className="button button-primary" href="#consultation">
-            Request Your Move Consultation
-          </a>
-          <a className="watch-link" href="#story">
-            <span className="play-icon" aria-hidden="true" />
-            Watch Our Story
-          </a>
+          <span className="scroll-line">
+            <span />
+          </span>
+          <p>Scroll to Begin</p>
         </motion.div>
       </div>
-
-      <motion.div
-        className="scroll-indicator"
-        animate={prefersReducedMotion ? undefined : { y: [0, 8, 0] }}
-        transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-        aria-hidden="true"
-      >
-        <span className="scroll-line">
-          <span />
-        </span>
-        <p>Scroll to Begin</p>
-      </motion.div>
     </section>
   );
 }
