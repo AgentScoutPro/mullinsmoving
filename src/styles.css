@@ -212,7 +212,11 @@ h1 {
   line-height: .88;
 }
 
-h1 span {
+.hero-headline-line {
+  display: block;
+}
+
+.hero-headline-accent {
   color: var(--color-gold-bright);
 }
 

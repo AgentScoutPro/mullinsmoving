@@ -1,11 +1,22 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import heroImage from "../assets/mullins-hero-v2.jpeg";
 
 const heroEase = [0.2, 0.8, 0.2, 1] as const;
 
+gsap.registerPlugin(ScrollTrigger);
+
 export function ChapterOneHero() {
   const heroRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const eyebrowRef = useRef<HTMLParagraphElement>(null);
+  const headlineRef = useRef<HTMLHeadingElement>(null);
+  const copyRef = useRef<HTMLParagraphElement>(null);
+  const servicesRef = useRef<HTMLDivElement>(null);
+  const actionsRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const frameRef = useRef<number | null>(null);
   const prefersReducedMotion = useReducedMotion();
@@ -24,10 +35,8 @@ export function ChapterOneHero() {
     [0, 160],
     ["rgba(255, 241, 212, 0)", "rgba(255, 241, 212, 0.12)"],
   );
-  const mediaScale = useTransform(scrollYProgress, [0, 0.72], prefersReducedMotion ? [1, 1] : [1.04, 1]);
+  const mediaScale = useTransform(scrollYProgress, [0, 0.92], prefersReducedMotion ? [1, 1] : [1, 1.03]);
   const mediaOpacity = useTransform(scrollYProgress, [0, 0.72, 1], [1, 1, 0.62]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.56, 0.92], [1, 1, 0]);
-  const contentY = useTransform(scrollYProgress, [0, 0.92], prefersReducedMotion ? [0, 0] : [0, -38]);
   const cueOpacity = useTransform(scrollYProgress, [0, 0.42, 0.7], [1, 1, 0]);
 
   const syncVideoToScroll = (progress: number) => {
@@ -62,26 +71,64 @@ export function ChapterOneHero() {
     };
   }, []);
 
-  const fadeUp = {
-    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 40 },
-    visible: (delay = 0) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: prefersReducedMotion ? 0 : delay,
-        duration: prefersReducedMotion ? 0.01 : 1.2,
-        ease: heroEase,
-      },
-    }),
-  };
+  useLayoutEffect(() => {
+    if (prefersReducedMotion) return;
+
+    const hero = heroRef.current;
+    const header = headerRef.current;
+    const content = contentRef.current;
+    const eyebrow = eyebrowRef.current;
+    const headline = headlineRef.current;
+    const copy = copyRef.current;
+    const services = servicesRef.current;
+    const actions = actionsRef.current;
+
+    if (!hero || !header || !content || !eyebrow || !headline || !copy || !services || !actions) {
+      return;
+    }
+
+    const ctx = gsap.context(() => {
+      const headlineLines = gsap.utils.toArray<HTMLElement>(".hero-headline-line", headline);
+      const serviceItems = gsap.utils.toArray<HTMLElement>(".services-bar span, .services-bar b", services);
+      const actionItems = gsap.utils.toArray<HTMLElement>("a", actions);
+
+      gsap.set(header, { autoAlpha: 0 });
+      gsap.set(eyebrow, { autoAlpha: 0, y: 20 });
+      gsap.set(headlineLines, { autoAlpha: 0, y: 40 });
+      gsap.set(copy, { autoAlpha: 0, y: 30 });
+      gsap.set(serviceItems, { autoAlpha: 0 });
+      gsap.set(actionItems, { autoAlpha: 0, y: 16 });
+
+      const intro = gsap.timeline({ defaults: { ease: "power2.out" } });
+      intro
+        .to(header, { autoAlpha: 1, duration: 0.8 }, 0.25)
+        .to(eyebrow, { autoAlpha: 1, y: 0, duration: 0.8 }, 0.45)
+        .to(headlineLines, { autoAlpha: 1, y: 0, duration: 0.95, stagger: 0.15, ease: "power3.out" }, 0.7)
+        .to(copy, { autoAlpha: 1, y: 0, duration: 0.8 }, 1.35)
+        .to(serviceItems, { autoAlpha: 1, duration: 0.6, stagger: 0.06 }, 1.55)
+        .to(actionItems, { autoAlpha: 1, y: 0, duration: 0.72, stagger: 0.1, ease: "power2.out" }, 1.75);
+
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: hero,
+            start: "top top",
+            end: "bottom top",
+            scrub: 0.8,
+          },
+        })
+        .to(content, { y: -80, ease: "none" }, 0)
+        .to(content, { autoAlpha: 0, ease: "none" }, 0.68);
+    }, hero);
+
+    return () => ctx.revert();
+  }, [prefersReducedMotion]);
 
   return (
     <section ref={heroRef} className="hero-shell" aria-labelledby="chapter-one-title">
       <motion.header
+        ref={headerRef}
         className="hero-header"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: prefersReducedMotion ? 0.01 : 0.9, ease: heroEase }}
         style={{ backgroundColor: headerBackground, borderColor: headerBorder }}
       >
         <a className="brand-lockup" href="/" aria-label="Mullins Moving home">
@@ -131,46 +178,34 @@ export function ChapterOneHero() {
 
         <div className="hero-gradient" aria-hidden="true" />
 
-        <motion.div className="hero-content" style={{ opacity: contentOpacity, y: contentY }}>
+        <motion.div ref={contentRef} className="hero-content">
           <motion.p
+            ref={eyebrowRef}
             className="hero-eyebrow"
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.18}
           >
             Arizona&apos;s White Glove Moving Experience
           </motion.p>
 
           <motion.h1
+            ref={headlineRef}
             id="chapter-one-title"
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.32}
           >
-            Every Move
-            <br />
-            Begins With <span>Trust.</span>
+            <span className="hero-headline-line">Every Move</span>
+            <span className="hero-headline-line">Begins With</span>
+            <span className="hero-headline-line hero-headline-accent">Trust.</span>
           </motion.h1>
 
           <motion.p
+            ref={copyRef}
             className="hero-copy"
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.52}
           >
             For over 20 years, we&apos;ve helped families, executives, and businesses move
             forward—carefully, professionally, and without compromise.
           </motion.p>
 
           <motion.div
+            ref={servicesRef}
             className="services-bar"
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.68}
             aria-label="Featured moving services"
           >
             <span>White Glove Moving</span>
@@ -181,11 +216,8 @@ export function ChapterOneHero() {
           </motion.div>
 
           <motion.div
+            ref={actionsRef}
             className="hero-actions"
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.82}
           >
             <a className="button button-primary" href="#consultation">
               Request Your Move Consultation
