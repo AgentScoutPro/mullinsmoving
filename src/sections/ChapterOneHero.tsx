@@ -1,11 +1,13 @@
-import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import heroImage from "../assets/mullins-hero-v2.jpeg";
 
 const heroEase = [0.2, 0.8, 0.2, 1] as const;
 
 export function ChapterOneHero() {
   const heroRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const frameRef = useRef<number | null>(null);
   const prefersReducedMotion = useReducedMotion();
   const { scrollY } = useScroll();
   const { scrollYProgress } = useScroll({
@@ -27,6 +29,38 @@ export function ChapterOneHero() {
   const contentOpacity = useTransform(scrollYProgress, [0, 0.56, 0.92], [1, 1, 0]);
   const contentY = useTransform(scrollYProgress, [0, 0.92], prefersReducedMotion ? [0, 0] : [0, -38]);
   const cueOpacity = useTransform(scrollYProgress, [0, 0.42, 0.7], [1, 1, 0]);
+
+  const syncVideoToScroll = (progress: number) => {
+    if (prefersReducedMotion) return;
+
+    const video = videoRef.current;
+    if (!video || !Number.isFinite(video.duration) || video.duration <= 0) return;
+
+    const clampedProgress = Math.min(Math.max(progress / 0.86, 0), 1);
+    const targetTime = clampedProgress * Math.max(video.duration - 0.08, 0);
+
+    if (Math.abs(video.currentTime - targetTime) < 0.035) return;
+    video.currentTime = targetTime;
+  };
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    if (frameRef.current !== null) {
+      window.cancelAnimationFrame(frameRef.current);
+    }
+
+    frameRef.current = window.requestAnimationFrame(() => {
+      syncVideoToScroll(latest);
+      frameRef.current = null;
+    });
+  });
+
+  useEffect(() => {
+    return () => {
+      if (frameRef.current !== null) {
+        window.cancelAnimationFrame(frameRef.current);
+      }
+    };
+  }, []);
 
   const fadeUp = {
     hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 40 },
@@ -82,13 +116,13 @@ export function ChapterOneHero() {
             <img className="hero-poster" src={heroImage} alt="" />
           ) : (
             <video
+              ref={videoRef}
               className="hero-video"
-              autoPlay
               muted
-              loop
               playsInline
-              preload="metadata"
+              preload="auto"
               poster={heroImage}
+              onLoadedMetadata={() => syncVideoToScroll(scrollYProgress.get())}
             >
               <source src="/videos/mullins-hero-scroll.mp4" type="video/mp4" />
             </video>
