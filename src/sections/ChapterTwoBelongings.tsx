@@ -1,5 +1,5 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import sectionTwoImage from "../assets/mm-section-2-v2.png";
+import sectionTwoImage from "../assets/mm-section-2-v2.webp";
 
 const revealEase = [0.2, 0.8, 0.2, 1] as const;
 

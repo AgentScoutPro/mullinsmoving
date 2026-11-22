@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
-import mapImage from "../assets/mm-image-map.png";
+import mapImage from "../assets/mm-image-map.webp";
 
 const eastValleyEase = [0.2, 0.8, 0.2, 1] as const;
 
@@ -32,6 +32,7 @@ export function ChapterSixEastValley() {
   return (
     <motion.section
       className="chapter-six"
+      id="service-areas"
       aria-labelledby="chapter-six-title"
       initial={prefersReducedMotion ? false : { opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -75,9 +76,7 @@ export function ChapterSixEastValley() {
           </motion.p>
 
           <motion.h2 id="chapter-six-title" variants={revealItem}>
-            The East Valley
-            <br />
-            Is Home.
+            Arizona Is Home.
           </motion.h2>
 
           <motion.p className="chapter-six-body" variants={revealItem}>
@@ -104,13 +103,12 @@ export function ChapterSixEastValley() {
             ))}
           </motion.ul>
 
-          <motion.a className="text-cta" href="#service-areas" variants={revealItem}>
+          <motion.a className="text-cta" href="https://www.mullins-moving.com/service-areas" variants={revealItem}>
             Explore Our Service Areas
           </motion.a>
         </motion.div>
       </div>
 
-      <p className="chapter-six-caption">East Valley Route Network</p>
     </motion.section>
   );
 }

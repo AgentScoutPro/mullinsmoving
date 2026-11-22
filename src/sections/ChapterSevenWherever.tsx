@@ -1,20 +1,30 @@
+import { clientSite } from "../content";
 import { motion, useReducedMotion } from "framer-motion";
-import globalRelocationImage from "../assets/mm-section-7-global.png";
+import globalRelocationImage from "../assets/mm-section-7-global.webp";
 
 const globalEase = [0.2, 0.8, 0.2, 1] as const;
 
 const pillars = [
   {
-    title: "East Valley",
-    description: "Where every journey begins.",
+    title: "Local Arizona Moving",
+    description: "Plan your move across the Valley or elsewhere in Arizona.",
+    id: "local-moving",
+    href: "#service-areas",
+    link: "See Arizona service areas",
   },
   {
-    title: "Long Distance",
-    description: "Across states, timelines, and new chapters.",
+    title: "Long-Distance Moving",
+    description: "Coordinate your packing, timeline, and delivery across state lines.",
+    id: "long-distance",
+    href: clientSite + "/long-distance-moving",
+    link: "Explore interstate moving",
   },
   {
-    title: "International",
-    description: "Across borders, oceans, and continents.",
+    title: "International Relocation",
+    description: "Talk through your destination, household goods, and timing with Mullins.",
+    id: "international",
+    href: "#consultation",
+    link: "Discuss an overseas move",
   },
 ];
 
@@ -36,6 +46,7 @@ export function ChapterSevenWherever() {
   return (
     <motion.section
       className="chapter-seven"
+      id="destinations"
       aria-labelledby="chapter-seven-title"
       initial={prefersReducedMotion ? false : { opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -87,6 +98,7 @@ export function ChapterSevenWherever() {
             {pillars.map((pillar, index) => (
               <motion.article
                 key={pillar.title}
+                id={pillar.id}
                 initial={{ opacity: 0, x: prefersReducedMotion ? 0 : -18 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.38 }}
@@ -98,14 +110,12 @@ export function ChapterSevenWherever() {
               >
                 <h3>{pillar.title}</h3>
                 <p>{pillar.description}</p>
+                <a className="pillar-link" href={pillar.href}>{pillar.link} <span aria-hidden="true">↗</span></a>
               </motion.article>
             ))}
           </motion.div>
 
           <motion.div className="chapter-seven-actions" variants={revealItem}>
-            <a className="text-cta" href="#long-distance">
-              Explore Long Distance &amp; International Moving
-            </a>
             <a className="chapter-seven-link" href="#consultation">
               Request Your Move Consultation
             </a>

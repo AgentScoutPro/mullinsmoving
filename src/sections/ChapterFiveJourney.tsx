@@ -1,3 +1,4 @@
+import driverImage from "../assets/mullins-driver.webp";
 import { motion, useReducedMotion } from "framer-motion";
 
 const journeyEase = [0.2, 0.8, 0.2, 1] as const;
@@ -49,7 +50,7 @@ export function ChapterFiveJourney() {
       viewport={{ once: true, amount: 0.18 }}
       transition={{ duration: prefersReducedMotion ? 0.01 : 1.15, ease: journeyEase }}
     >
-      <div className="chapter-five-texture" aria-hidden="true" />
+      <img className="chapter-five-image" src={driverImage} alt="" loading="lazy" decoding="async" />
       <div className="chapter-five-inner">
         <motion.div
           className="chapter-five-copy"
@@ -81,8 +82,8 @@ export function ChapterFiveJourney() {
             </p>
           </motion.div>
 
-          <motion.a className="text-cta" href="#planning" variants={revealItem}>
-            See How We Plan Every Move
+          <motion.a className="text-cta" href="#consultation" variants={revealItem}>
+            Plan Your Move
           </motion.a>
         </motion.div>
 

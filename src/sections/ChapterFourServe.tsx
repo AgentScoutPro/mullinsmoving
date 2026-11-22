@@ -1,5 +1,5 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import sectionFourImage from "../assets/mm-section-07-1.png";
+import sectionFourImage from "../assets/mullins-crew.webp";
 
 const serveEase = [0.2, 0.8, 0.2, 1] as const;
 
@@ -23,6 +23,7 @@ export function ChapterFourServe() {
   return (
     <motion.section
       className="chapter-four"
+      id="story"
       aria-labelledby="chapter-four-title"
       initial={prefersReducedMotion ? false : { opacity: 0, y: 48 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -40,7 +41,7 @@ export function ChapterFourServe() {
         >
           <img
             src={sectionFourImage}
-            alt="A Mullins Moving team member helping a customer unload an item from the truck"
+            alt="Mullins Moving crew with a customer"
             loading="lazy"
             decoding="async"
           />
@@ -65,28 +66,13 @@ export function ChapterFourServe() {
 
           <motion.div className="chapter-four-body" variants={revealItem}>
             <p>
-              For more than twenty years, we&apos;ve believed that moving is about more than
-              transportation.
+              Moving day is personal. We show up with care, clear communication, and respect
+              for the people and homes we serve.
             </p>
-            <p>It&apos;s about showing up for people during one of life&apos;s biggest transitions.</p>
-            <p>Every conversation.</p>
-            <p>Every box.</p>
-            <p>Every handshake.</p>
-            <p>
-              Every move is an opportunity to serve with integrity, professionalism, and genuine
-              care.
-            </p>
-            <p>That&apos;s the standard we hold ourselves to—every single day.</p>
           </motion.div>
 
-          <motion.blockquote className="chapter-four-quote" variants={revealItem}>
-            “We never set out to be the biggest.
-            <br />
-            We set out to be the most trusted.”
-          </motion.blockquote>
-
-          <motion.a className="text-cta" href="#team" variants={revealItem}>
-            Meet The Team Behind Mullins
+          <motion.a className="text-cta" href="https://www.mullins-moving.com/about" variants={revealItem}>
+            Meet the Team Behind Mullins
           </motion.a>
         </motion.div>
       </div>

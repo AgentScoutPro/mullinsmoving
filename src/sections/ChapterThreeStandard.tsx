@@ -1,5 +1,5 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import sectionThreeImage from "../assets/mm-section-3-v2.png";
+import sectionThreeImage from "../assets/mullins-packing.webp";
 
 const standardEase = [0.2, 0.8, 0.2, 1] as const;
 
@@ -31,6 +31,7 @@ export function ChapterThreeStandard() {
   return (
     <motion.section
       className="chapter-three"
+      id="standard"
       aria-labelledby="chapter-three-title"
       initial={prefersReducedMotion ? false : { opacity: 0, y: 48 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -78,8 +79,8 @@ export function ChapterThreeStandard() {
             “The care you never have to ask for.”
           </motion.blockquote>
 
-          <motion.a className="text-cta" href="#standard" variants={revealItem}>
-            Discover The Mullins Standard
+          <motion.a className="text-cta" href="https://www.mullins-moving.com/white-glove-moving-service" variants={revealItem}>
+            Explore White-Glove Moving
           </motion.a>
         </motion.div>
 
