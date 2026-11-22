@@ -1,30 +1,63 @@
-import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import truckImage from "../assets/mullins-truck.webp";
+import { useRef, useState } from "react";
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import heroPoster from "../assets/mullins-desert-poster.webp";
+
+const finalFrameHold = .08;
+const seekThreshold = 1 / 30;
 
 export function ChapterOneHero() {
   const heroRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoReady, setVideoReady] = useState(false);
   const reducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: heroRef,
-    offset: ["start start", "end end"],
+    offset: ["start 100px", "end end"],
   });
-  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
-  const mediaY = useTransform(scrollYProgress, [0, 1], ["0%", "2%"]);
-  const copyY = useTransform(scrollYProgress, [0, 1], [0, -34]);
-  const copyOpacity = useTransform(scrollYProgress, [0, .65, 1], [1, 1, .25]);
+  const copyY = useTransform(scrollYProgress, [0, .55, .9], [0, 0, -24]);
+  const copyOpacity = useTransform(scrollYProgress, [0, .58, .9], [1, 1, .15]);
+  const gradientOpacity = useTransform(scrollYProgress, [0, .58, .9], [1, 1, .35]);
+
+  function seekToScroll() {
+    const video = videoRef.current;
+    if (!video || video.seeking || !Number.isFinite(video.duration)) return;
+
+    const progress = Math.min(Math.max(scrollYProgress.get(), 0) / (1 - finalFrameHold), 1);
+    const lastFrame = Math.max(0, video.duration - 1 / 24);
+    const time = progress * lastFrame;
+
+    // Keep one seek in flight and pick up the latest scroll position when it finishes.
+    if (Math.abs(video.currentTime - time) >= seekThreshold) video.currentTime = time;
+  }
+
+  useMotionValueEvent(scrollYProgress, "change", seekToScroll);
 
   return (
     <section ref={heroRef} className="hero-shell" aria-labelledby="chapter-one-title">
       <div className="hero-stage">
+        <div className="hero-media" aria-hidden="true">
+          <img className="hero-poster" src={heroPoster} alt="" fetchPriority="high" />
+          {!reducedMotion && (
+            <video
+              ref={videoRef}
+              className="hero-reel"
+              data-ready={videoReady}
+              src="/videos/mullins-desert-hero.mp4"
+              preload="auto"
+              muted
+              playsInline
+              onLoadedMetadata={seekToScroll}
+              onLoadedData={() => setVideoReady(true)}
+              onSeeked={seekToScroll}
+              onError={() => setVideoReady(false)}
+            />
+          )}
+        </div>
         <motion.div
-          className="hero-media"
-          style={reducedMotion ? undefined : { scale: mediaScale, y: mediaY }}
+          className="hero-gradient"
+          style={reducedMotion ? undefined : { opacity: gradientOpacity }}
           aria-hidden="true"
-        >
-          <img className="hero-poster" src={truckImage} alt="" fetchPriority="high" />
-        </motion.div>
-        <div className="hero-gradient" aria-hidden="true" />
+        />
 
         <motion.div
           className="hero-content"

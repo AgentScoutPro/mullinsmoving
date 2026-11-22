@@ -112,7 +112,8 @@ a {
   transform-origin: center center;
 }
 
-.hero-poster {
+.hero-poster,
+.hero-reel {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1495,7 +1496,7 @@ a:focus-visible {
 }
 
 .hero-shell {
-  min-height: 137svh;
+  min-height: 185svh;
 }
 
 .hero-stage {
@@ -1507,9 +1508,25 @@ a:focus-visible {
   transform-origin: right center;
 }
 
-.hero-poster {
+.hero-poster,
+.hero-reel {
   display: block;
-  object-position: 66% 44%;
+  object-position: 65% center;
+}
+
+.hero-reel {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.hero-reel[data-ready="true"] {
+  opacity: 1;
+}
+
+.hero-content:focus-within,
+.hero-stage:has(.hero-content:focus-within) .hero-gradient {
+  opacity: 1 !important;
 }
 
 .hero-gradient {
@@ -1774,8 +1791,9 @@ a:focus-visible {
     height: 64%;
   }
 
-  .hero-poster {
-    object-position: 61% 42%;
+  .hero-poster,
+  .hero-reel {
+    object-position: 64% center;
   }
 
   .hero-gradient {
