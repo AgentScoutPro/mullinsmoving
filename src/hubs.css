@@ -103,21 +103,21 @@
 .hub-discover { border-top: 1px solid #c9a24b44; }
 
 @media (prefers-reduced-motion: no-preference) {
-  [data-interactive-cards] .hub-grid article {
+  .hub-grid article {
     position: relative;
     scale: var(--card-scale, 1);
     translate: 0 var(--card-lift, 0);
     transition: scale .24s var(--ease-luxury), translate .24s var(--ease-luxury);
   }
 
-  [data-interactive-cards] .hub-grid article:has(:focus-visible) {
+  .hub-grid article:has(:focus-visible) {
     --card-scale: 1.035;
     --card-lift: -5px;
     z-index: 1;
   }
 
   @media (hover: hover) {
-    [data-interactive-cards] .hub-grid article:hover {
+    .hub-grid article:hover {
       --card-scale: 1.035;
       --card-lift: -5px;
       z-index: 1;
