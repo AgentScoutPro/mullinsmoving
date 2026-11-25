@@ -6,7 +6,7 @@ import servicesPhoto from "../assets/mullins-organized-truck-poster.webp";
 import localPhoto from "../assets/east-valley-arrival.webp";
 import truckPhoto from "../assets/mullins-truck.webp";
 import internationalPhoto from "../assets/loading-boxes.webp";
-import tableProtection from "../assets/mullins-protecting-table.webp";
+import screenProtection from "../assets/mullins-protecting-flat-screen.webp";
 import specialtyItem from "../assets/mullins-specialty-item-protection.webp";
 import driveway from "../assets/mullins-driveway-access.webp";
 import neighborhoodTruck from "../assets/mullins-neighborhood-truck.webp";
@@ -53,7 +53,7 @@ const hubs: Record<HubPath, Hub> = {
     feature: {
       title: "Care starts with the first box.",
       body: "From wrapping dishes to padding furniture and protecting floors, we plan the work around your home and what you need moved. Choose the services that fit your move.",
-      media: { image: tableProtection, description: "Two Mullins movers protect a large tabletop before transport", position: "44% 68%" },
+      media: { image: screenProtection, description: "Two Mullins movers prepare a large flat-screen TV for transport", position: "44% 68%" },
     },
     closing: {
       title: "Tell us what your move needs.",
