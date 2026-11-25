@@ -17,6 +17,7 @@ import routes from "../hub-routes.json";
 
 type HubPath = Exclude<keyof typeof routes, "/contact">;
 type Detail = { title: string; body: string; href?: string };
+type DetailSection = { heading: string; details: Detail[] };
 type HubScene = { title: string; body: string; media: SceneMedia };
 
 type Hub = {
@@ -27,6 +28,8 @@ type Hub = {
   closing: HubScene;
   heading: string;
   details: Detail[];
+  more?: DetailSection;
+  resources?: { label: string; href: string }[];
   next?: Detail[];
 };
 
@@ -57,22 +60,36 @@ const hubs: Record<HubPath, Hub> = {
     },
     heading: "A move for every chapter.",
     details: [
-      { title: "White-glove moving", body: "Plan protection, careful handling, and placement for the items that need extra attention.", href: clientSite + "/white-glove-moving-service" },
-      { title: "Residential moving", body: "Coordinate furniture, boxes, access, and the details of getting settled at home.", href: clientSite + "/residential-moving" },
-      { title: "Commercial moving", body: "Schedule your office move around access, equipment, and business hours.", href: clientSite + "/commercial-moving-services" },
-      { title: "Packing & unpacking", body: "Ask for full or partial packing based on what you want help with.", href: clientSite + "/services" },
-      { title: "Senior moving", body: "Plan the move alongside family or caregivers and coordinate access at the new home.", href: clientSite + "/senior-moving-services-az" },
-      { title: "Specialty items", body: "Tell us about fragile, oversized, or high-value pieces so we can plan ahead.", href: quoteLink },
+      { title: "White-glove and estate moving", body: "Plan fine art, antiques, and custom furniture with a dedicated coordinator. Ask about custom crating, final placement, furniture assembly, and packing debris removal.", href: clientSite + "/white-glove-moving-service" },
+      { title: "Residential and apartment moving", body: "Move from a house, condo, or apartment with a plan for stairs, elevators, loading zones, and furniture protection at both addresses.", href: clientSite + "/residential-moving" },
+      { title: "Commercial and office moving", body: "Coordinate the move around business hours, building access, furniture, and equipment. The crew can place items according to your floor plan.", href: clientSite + "/commercial-moving-services" },
+      { title: "Packing and unpacking", body: "Choose full-home packing or help with selected rooms and fragile items. Ask about labeled boxes and unpacking at the new address." },
+      { title: "Senior and assisted-living moves", body: "Plan downsizing, furniture placement, and move-in access with family, caregivers, or the receiving community.", href: clientSite + "/senior-moving-services-az" },
+      { title: "Specialty items", body: "Flag pianos, safes, artwork, and oversized pieces during the estimate so the crew can plan handling, protection, and access." },
+      { title: "Labor-only help", body: "Book a crew to load or unload a rental truck or portable container, or to rearrange heavy furniture within your home." },
+      { title: "Storage between homes", body: "If the dates for your two homes don’t line up, ask about storage options and how pickup, storage, and final delivery would fit together." },
+    ],
+    more: {
+      heading: "Moving for work or service.",
+      details: [
+        { title: "Military moves", body: "Share your orders timeline, inventory, and any reimbursement documentation your move requires.", href: clientSite + "/military-movers" },
+        { title: "First responder moves", body: "Talk through your shift schedule and see the moving support Mullins offers first responders.", href: clientSite + "/first-responder-movers" },
+        { title: "Moving discounts", body: "See the current eligibility and terms for military members, first responders, and educators.", href: clientSite + "/discounts" },
+      ],
+    },
+    resources: [
+      { label: "Review valuation options", href: clientSite + "/moving-insurance-options" },
+      { label: "Read client moving stories", href: clientSite + "/reviews-stories" },
     ],
     next: destinations,
   },
   "/service-areas": {
     eyebrow: "Arizona Is Home",
-    intro: "Whether you’re moving across Gilbert or across the Valley, start with the crew that calls Arizona home.",
+    intro: "Plan a residential, white-glove, or commercial move across the East Valley, Greater Phoenix, or elsewhere in Arizona. Start with your city and share both addresses so we can plan the route and access.",
     hero: { image: localPhoto, description: "", position: "66% center" },
     feature: {
       title: "Every neighborhood has its details.",
-      body: "A gated community, a downtown loading zone, and a home with a long driveway each call for a different plan. Tell us about parking, gate access, stairs, and any building rules when you request your estimate.",
+      body: "A gated estate in Paradise Valley and a condo in Old Town Scottsdale call for different plans. Share gate and HOA rules, elevator reservations, parking, or steep driveways early so the crew can plan truck access and protect your home.",
       media: { image: patioPhoto, description: "" },
     },
     closing: {
@@ -80,25 +97,49 @@ const hubs: Record<HubPath, Hub> = {
       body: "Tell us where you’re starting, where you’re headed, and when you need to move. We’ll use those details to plan for both homes.",
       media: { image: skylinePhoto, description: "" },
     },
-    heading: "Find your city.",
+    heading: "Find your city or community.",
     details: [
-      { title: "Gilbert", body: "Including Agritopia, Val Vista Lakes, and Morrison Ranch.", href: clientSite + "/moving-to-gilbert-arizona" },
-      { title: "Scottsdale", body: "Including Old Town, DC Ranch, and Grayhawk.", href: clientSite + "/professional-movers-in-scottsdale-az" },
-      { title: "Mesa", body: "Including Eastmark, Las Sendas, and Red Mountain Ranch.", href: clientSite + "/moving-to-mesa-az" },
-      { title: "Chandler", body: "Including Ocotillo, Sun Lakes, and Fulton Ranch.", href: clientSite + "/moving-to-chandler-arizona" },
-      { title: "Queen Creek", body: "Ask about pickup and delivery dates in Queen Creek and nearby communities.", href: clientSite + "/service-areas" },
-      { title: "Tempe", body: "From the ASU area to South Tempe and the Kyrene Corridor.", href: clientSite + "/movers-in-tempe-arizona" },
-      { title: "Paradise Valley", body: "Plan access, protection, and placement for your home move.", href: clientSite + "/moving-resources-for-paradise-valley-az" },
-      { title: "Phoenix", body: "Including Arcadia, Biltmore, and Central Phoenix.", href: clientSite + "/moving-tips-phoenix-arizona" },
+      { title: "Gilbert", body: "Agritopia, Val Vista Lakes, Morrison Ranch, Cooley Station, and Whitewing.", href: clientSite + "/moving-company-gilbert-arizona" },
+      { title: "Scottsdale", body: "Old Town condos, DC Ranch, Grayhawk, and North Scottsdale homes.", href: clientSite + "/moving-company-scottsdale-arizona" },
+      { title: "Mesa", body: "Eastmark, Las Sendas, Red Mountain Ranch, Dobson Ranch, and Downtown Mesa.", href: clientSite + "/moving-company-mesa-arizona" },
+      { title: "Chandler", body: "Ocotillo, Fulton Ranch, Downtown Chandler, and nearby Sun Lakes.", href: clientSite + "/moving-company-chandler-arizona" },
+      { title: "Queen Creek", body: "Cortina, Montelena, and Queen Creek Crossroads.", href: clientSite + "/moving-company-queen-creek-arizona" },
+      { title: "Tempe", body: "The ASU area, South Tempe, Warner Ranch, and the Kyrene Corridor.", href: clientSite + "/moving-company-tempe-arizona" },
+      { title: "Paradise Valley", body: "White-glove planning for estates, high-value furnishings, and private or gated access.", href: clientSite + "/moving-company-paradise-valley-arizona" },
+      { title: "Phoenix", body: "Arcadia, Biltmore, Central Phoenix, and Desert Ridge.", href: clientSite + "/moving-company-phoenix-arizona" },
+      { title: "San Tan Valley", body: "Johnson Ranch, Pecan Creek, and Skyline Ranch.", href: clientSite + "/moving-company-san-tan-valley-arizona" },
+      { title: "Ahwatukee", body: "Lakewood, The Foothills, and Mountain Park Ranch.", href: clientSite + "/moving-company-ahwatukee-arizona" },
+      { title: "Fountain Hills", body: "Eagle Mountain, Firerock, and Sunridge Canyon.", href: clientSite + "/moving-company-fountain-hills-arizona" },
+      { title: "Apache Junction", body: "Apache Junction, Gold Canyon, and the Superstition Foothills.", href: clientSite + "/moving-company-apache-junction-arizona" },
+    ],
+    more: {
+      heading: "Explore neighborhood moving guides.",
+      details: [
+        { title: "Agritopia", body: "Gilbert", href: clientSite + "/locations/agritopia-movers" },
+        { title: "Morrison Ranch", body: "Gilbert", href: clientSite + "/locations/morrison-ranch-movers" },
+        { title: "Val Vista Lakes", body: "Gilbert", href: clientSite + "/locations/val-vista-lakes-movers" },
+        { title: "Cooley Station", body: "Gilbert", href: clientSite + "/locations/cooley-station-movers" },
+        { title: "Eastmark", body: "Mesa", href: clientSite + "/locations/eastmark-movers" },
+        { title: "Las Sendas", body: "Mesa", href: clientSite + "/locations/las-sendas-movers" },
+        { title: "Ocotillo", body: "Chandler", href: clientSite + "/locations/ocotillo-movers" },
+        { title: "Fulton Ranch", body: "Chandler", href: clientSite + "/locations/fulton-ranch-movers" },
+        { title: "Cortina", body: "Queen Creek", href: clientSite + "/locations/cortina-movers" },
+      ],
+    },
+    resources: [
+      { label: "North Phoenix, Anthem and Peoria", href: clientSite + "/north-phoenix-az-anthem-peoria" },
+      { label: "Glendale", href: clientSite + "/moving-to-glendale-az" },
+      { label: "West Valley moving guide", href: clientSite + "/move-to-west-phoenix-az" },
+      { label: "Local moving resources", href: clientSite + "/moving-resources" },
     ],
   },
   "/long-distance-moving": {
     eyebrow: "Across State Lines",
-    intro: "Move from the Phoenix area with a dedicated truck, one team, and a written quote for the inventory and services you agree on.",
+    intro: "Move from Phoenix or the East Valley with one Mullins team, a truck reserved for your household, and a written binding quote for the agreed inventory, services, and access conditions.",
     hero: { image: truckPhoto, description: "Mullins Moving truck", position: "66% center" },
     feature: {
       title: "Your own truck. A clear plan.",
-      body: "Before the truck leaves Arizona, we confirm your inventory, what needs extra protection, and how the crew will access both homes. Your written quote lays out the services you’ve agreed on.",
+      body: "You book directly with Mullins. The same team handles loading, transportation, unloading, and placement. Your household travels on its own truck, with pickup and delivery arrangements agreed before move day.",
       media: { image: loadingPhoto, description: "A Mullins mover loads wrapped furniture into a truck", position: "center 44%" },
     },
     closing: {
@@ -108,25 +149,39 @@ const hubs: Record<HubPath, Hub> = {
     },
     heading: "What to expect on an interstate move.",
     details: [
-      { title: "Start with the details", body: "Share both addresses, your dates, access conditions, inventory, and packing needs." },
-      { title: "Get a written plan", body: "Confirm what is included in your quote and how pickup and delivery will be scheduled." },
-      { title: "Travel on a dedicated truck", body: "Your belongings travel directly to your destination on a truck reserved for your move." },
-      { title: "Settle in at arrival", body: "The team unloads, reassembles furniture, and places it in the rooms you designate." },
+      { title: "Review both addresses", body: "Share your dates, inventory, stairs and elevators, truck access, packing needs, and any specialty pieces at the consultation." },
+      { title: "Confirm the binding quote", body: "Review the agreed inventory, services, and access conditions in writing. Tell your coordinator about changes so they can be addressed ahead of pickup." },
+      { title: "Protect, load, and transport", body: "The crew pads and wraps furniture as needed and protects mirrors and glass. Ask about full or partial packing and unpacking in your written plan." },
+      { title: "Settle in at arrival", body: "Furniture disassembly, reassembly, and placement are included. The crew unloads into the rooms you designate and walks through the delivery with you." },
+    ],
+    more: {
+      heading: "See how real interstate moves came together.",
+      details: [
+        { title: "Scottsdale to San Diego", body: "A two-bedroom household move with white-glove care and direct transportation." },
+        { title: "Phoenix to Bethesda", body: "A three-bedroom household move with full packing before the interstate trip." },
+        { title: "Gilbert to Irvine", body: "A household move that needed a short storage window between homes." },
+      ],
+    },
+    resources: [
+      { label: "Read the full client stories", href: clientSite + "/reviews-stories" },
+      { label: "Review valuation options", href: clientSite + "/moving-insurance-options" },
+      { label: "Verify registration and household-goods authority: USDOT 4250923, MC 1647731", href: "https://www.fmcsa.dot.gov/protect-your-move/search-mover" },
+      { label: "Review the FMCSA moving checklist", href: "https://www.fmcsa.dot.gov/protect-your-move/moving-checklist" },
     ],
     next: [destinations[0], destinations[2]],
   },
   "/international-moving": {
     eyebrow: "Across Borders",
-    intro: "Planning an overseas move? Tell us where you’re headed, what you’re taking, and when you need to arrive. We’ll discuss your options and the next steps for your route.",
+    intro: "Start planning your international household relocation from Arizona. Share your destination, timing, and inventory so Mullins can discuss the arrangements available for your route.",
     hero: { image: internationalPhoto, description: "", position: "66% center" },
     feature: {
       title: "Start with your destination.",
-      body: "Your destination, household inventory, and arrival window shape the conversation. Bring those details so we can discuss the arrangements available for your route.",
+      body: "The right plan starts with what you’re taking and when you need it. Share which essentials need to arrive first, what can travel later, and which heirlooms, artwork, or furnishings may need special preparation.",
       media: { image: relocationPhoto, description: "" },
     },
     closing: {
       title: "Talk through the route with us.",
-      body: "Bring your questions about timing, packing, paperwork, and who handles each stage. We’ll help you work through the next steps for the route you’re considering.",
+      body: "Tell us if this is a household, corporate or executive relocation, or a military move. Bring any employer or orders deadlines so the consultation can cover timing, responsibilities, and next steps.",
       media: { image: crewPhoto, description: "Mullins Moving crew with a customer", position: "center 36%" },
     },
     heading: "What to bring to your consultation.",
@@ -134,11 +189,35 @@ const hubs: Record<HubPath, Hub> = {
       { title: "Your origin and destination", body: "Share your pickup city and your destination country and city, even if the final address is still open." },
       { title: "Your timing", body: "Bring your target move date, delivery window, and any time you’ll need between homes." },
       { title: "What you’re taking", body: "List your household goods, furniture, and fragile or high-value pieces. Include any items you plan to leave behind." },
-      { title: "Questions about shipping", body: "Ask which arrangements are available for your route, who handles each stage, and what paperwork you may need." },
     ],
+    more: {
+      heading: "What to confirm before you book.",
+      details: [
+        { title: "Freight and timing", body: "Ask whether ocean or air freight is available for your route, how a shipment would be packed or containerized, and how the delivery window is set." },
+        { title: "Customs and paperwork", body: "Ask which inventory and customs documents your destination requires, who prepares them, and when they need to be ready." },
+        { title: "Pickup, handoffs, and delivery", body: "Confirm who handles packing and origin pickup, who takes over in transit, and whether destination delivery, storage, unpacking, or placement can be arranged." },
+      ],
+    },
+    resources: [{ label: "Explore white-glove packing and protection", href: clientSite + "/white-glove-moving-service" }],
     next: [destinations[0], destinations[1]],
   },
 };
+
+function HubDetails({ id, heading, details }: DetailSection & { id: string }) {
+  return (
+    <section className="hub-width hub-section" aria-labelledby={id}>
+      <h2 id={id}>{heading}</h2>
+      <ScrollReveal className="hub-grid">
+        {details.map(({ title, body, href }) => (
+          <article key={title}>
+            <h3>{href ? <a href={href}>{title} <span aria-hidden="true">↗</span></a> : title}</h3>
+            <p>{body}</p>
+          </article>
+        ))}
+      </ScrollReveal>
+    </section>
+  );
+}
 
 export function isHubPath(path: string): path is HubPath {
   return Object.prototype.hasOwnProperty.call(hubs, path);
@@ -146,6 +225,9 @@ export function isHubPath(path: string): path is HubPath {
 
 export function HubPage({ path }: { path: HubPath }) {
   const hub = hubs[path];
+  const estimateLabel = path === "/international-moving"
+    ? "Request an International Consultation"
+    : "Request Your Free Estimate";
   return (
     <main className="hub-page" id="main-content">
       <section className="hub-hero" aria-labelledby="hub-title">
@@ -158,7 +240,7 @@ export function HubPage({ path }: { path: HubPath }) {
           <h1 id="hub-title">{routes[path].title}</h1>
           <p>{hub.intro}</p>
           <div className="hub-actions">
-            <a className="button button-primary" href={quoteLink}>Request Your Free Estimate</a>
+            <a className="button button-primary" href={quoteLink}>{estimateLabel}</a>
             <a className="pillar-link" href={phoneLink}>Call {phoneLabel}</a>
           </div>
         </ScrollReveal>
@@ -172,20 +254,8 @@ export function HubPage({ path }: { path: HubPath }) {
         <h2 id="hub-feature">{hub.feature.title}</h2>
         <p>{hub.feature.body}</p>
       </EditorialScene>
-      <section className="hub-width hub-section" aria-labelledby="hub-details">
-        <h2 id="hub-details">{hub.heading}</h2>
-        <ScrollReveal className="hub-grid">
-          {hub.details.map(({ title, body, href }) => (
-            <article key={title}>
-              <h3>{href ? <a href={href}>{title} <span aria-hidden="true">↗</span></a> : title}</h3>
-              <p>{body}</p>
-            </article>
-          ))}
-        </ScrollReveal>
-        {path === "/service-areas" && (
-          <a className="text-cta" href={clientSite + "/service-areas"}>See the full service-area directory</a>
-        )}
-      </section>
+      <HubDetails heading={hub.heading} details={hub.details} id="hub-details" />
+      {hub.more && <HubDetails {...hub.more} id="hub-more" />}
       <section className="hub-width hub-section hub-discover" aria-labelledby="hub-next">
         <h2 id="hub-next">Keep planning your move.</h2>
         <ScrollReveal className="hub-grid">
@@ -197,6 +267,9 @@ export function HubPage({ path }: { path: HubPath }) {
           ))}
         </ScrollReveal>
         <div className="hub-actions">
+          {hub.resources?.map(({ label, href }) => (
+            <a className="text-cta" href={href} key={href}>{label}</a>
+          ))}
           <a className="text-cta" href={clientSite + "/faq"}>Moving FAQs</a>
         </div>
       </section>
@@ -208,7 +281,7 @@ export function HubPage({ path }: { path: HubPath }) {
         <h2 id="hub-closing">{hub.closing.title}</h2>
         <p>{hub.closing.body}</p>
         <div className="consultation-actions">
-          <a className="button button-primary" href={quoteLink}>Request Your Free Estimate</a>
+          <a className="button button-primary" href={quoteLink}>{estimateLabel}</a>
           <a className="text-cta" href={phoneLink}>Call {phoneLabel}</a>
         </div>
       </EditorialScene>
