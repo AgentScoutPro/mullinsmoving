@@ -50,7 +50,7 @@ function ReviewRow({ reviews, reverse }: { reviews: Review[]; reverse?: boolean 
   );
 }
 
-export function GoogleReviews() {
+export function GoogleReviews({ backdrop }: { backdrop?: string }) {
   const section = useRef<HTMLElement>(null);
   const nearView = useInView(section, { once: true, margin: "320px 0px" });
   const inView = useInView(section);
@@ -95,6 +95,7 @@ export function GoogleReviews() {
       data-in-view={inView}
     >
       <div className="reviews-heading">
+        {backdrop && <img className="reviews-backdrop" src={backdrop} alt="" loading="lazy" decoding="async" />}
         <p className="section-eyebrow">Customer Experiences</p>
         <h2 id="reviews-title">Stories Worth Moving.</h2>
         <p>Read what families and businesses shared about their move with Mullins.</p>

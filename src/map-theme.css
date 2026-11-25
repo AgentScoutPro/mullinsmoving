@@ -4,12 +4,9 @@
   --map-panel: #241734;
   --map-lavender: #c7b3e4;
   --map-grid:
-    linear-gradient(90deg, #a988d612 1px, transparent 1px),
-    linear-gradient(#a988d612 1px, transparent 1px),
-    linear-gradient(90deg, #e0b76724 1px, transparent 1px),
-    linear-gradient(#e0b76724 1px, transparent 1px),
-    repeating-linear-gradient(135deg, transparent 0 274px, #c3a2ec13 275px 276px, transparent 277px 335px);
-  --map-grid-size: 44px 44px, 44px 44px, 220px 220px, 220px 220px, auto;
+    linear-gradient(90deg, #a988d608 1px, transparent 1px),
+    linear-gradient(#a988d608 1px, transparent 1px);
+  --map-grid-size: 96px 96px, 96px 96px;
 }
 
 body,
@@ -51,9 +48,13 @@ body,
   isolation: isolate;
 }
 
-:is(.hero-stage, .chapter-two, .chapter-three, .chapter-four, .chapter-five,
-  .chapter-six, .chapter-seven, .closing-scene)::before,
-.hub-hero::after {
+.hero-content,
+.hub-hero .hub-width {
+  position: relative;
+  z-index: 1;
+}
+
+.chapter-two::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -61,31 +62,6 @@ body,
   background-image: var(--map-grid);
   background-size: var(--map-grid-size);
   pointer-events: none;
-}
-
-.hero-stage::before,
-.hub-hero::after {
-  z-index: 0;
-  opacity: .56;
-}
-
-.hero-content,
-.hub-hero .hub-width {
-  position: relative;
-  z-index: 1;
-}
-
-.chapter-three::before,
-.chapter-four::before,
-.chapter-five::before,
-.closing-scene::before {
-  z-index: 0;
-  opacity: .64;
-}
-
-.closing-content {
-  position: relative;
-  z-index: 1;
 }
 
 .hub-hero::before {
@@ -120,7 +96,7 @@ body,
 .chapter-two-copy {
   max-width: none;
   padding: clamp(2rem, 4vw, 4.5rem);
-  background: #21162feb;
+  background: #21162f;
 }
 
 .chapter-two h2 {

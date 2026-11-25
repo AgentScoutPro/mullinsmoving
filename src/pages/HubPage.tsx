@@ -1,8 +1,8 @@
 import { ScrollReveal } from "../sections/ScrollReveal";
 import servicesPhoto from "../assets/mullins-packing.webp";
-import localMap from "../assets/mm-image-map.webp";
+import localPhoto from "../assets/east-valley-arrival.webp";
 import truckPhoto from "../assets/mullins-truck.webp";
-import globalMap from "../assets/mm-section-7-global.webp";
+import internationalPhoto from "../assets/loading-boxes.webp";
 import { clientSite, phoneLabel, phoneLink, quoteLink } from "../content";
 import routes from "../hub-routes.json";
 
@@ -42,7 +42,7 @@ const hubs: Record<HubPath, Hub> = {
   "/service-areas": {
     eyebrow: "Arizona Is Home",
     intro: "Whether you’re moving across Gilbert or across the Valley, start with the crew that calls Arizona home.",
-    image: localMap,
+    image: localPhoto,
     heading: "Find your city.",
     details: [
       { title: "Gilbert", body: "Including Agritopia, Val Vista Lakes, and Morrison Ranch.", href: clientSite + "/moving-to-gilbert-arizona" },
@@ -71,7 +71,7 @@ const hubs: Record<HubPath, Hub> = {
   "/international-moving": {
     eyebrow: "Across Borders",
     intro: "Planning an overseas move? Tell us where you’re headed, what you’re taking, and when you need to arrive. We’ll discuss your options and the next steps for your route.",
-    image: globalMap,
+    image: internationalPhoto,
     heading: "What to bring to your consultation.",
     details: [
       { title: "Your origin and destination", body: "Share your pickup city and your destination country and city, even if the final address is still open." },

@@ -1,5 +1,5 @@
 import { clientSite, googleMapsLink, phoneLabel, phoneLink, quoteLink } from "../content";
-import crewPhoto from "../assets/mullins-crew.webp";
+import patio from "../assets/mesa-patio.webp";
 import { GoogleReviews } from "../sections/GoogleReviews";
 import { ScrollReveal } from "../sections/ScrollReveal";
 
@@ -9,7 +9,7 @@ export function ContactPage() {
   return (
     <main className="hub-page" id="main-content">
       <section className="hub-hero" aria-labelledby="contact-title">
-        <img src={crewPhoto} alt="" fetchPriority="high" />
+        <img src={patio} alt="" fetchPriority="high" />
         <ScrollReveal className="hub-width">
           <nav className="hub-breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Contact</span>

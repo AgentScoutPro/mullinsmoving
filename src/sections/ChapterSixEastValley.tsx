@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
-import mapImage from "../assets/mm-image-map.webp";
+import valleyPhoto from "../assets/arizona-skyline.webp";
 
 const eastValleyEase = [0.2, 0.8, 0.2, 1] as const;
 
@@ -47,7 +47,7 @@ export function ChapterSixEastValley() {
         transition={{ duration: prefersReducedMotion ? 0.01 : 1.25, ease: eastValleyEase }}
         aria-hidden="true"
       >
-        <img src={mapImage} alt="" loading="lazy" decoding="async" />
+        <img src={valleyPhoto} alt="" loading="lazy" decoding="async" />
       </motion.div>
 
       <div className="chapter-six-overlay" aria-hidden="true" />

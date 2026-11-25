@@ -4,6 +4,7 @@ import "./styles.css";
 import "./hubs.css";
 import "./map-theme.css";
 import "./reviews.css";
+import "./editorial.css";
 import { ContactPage } from "./pages/ContactPage";
 import { HubPage, isHubPath } from "./pages/HubPage";
 import { SiteLayout } from "./pages/SiteLayout";
