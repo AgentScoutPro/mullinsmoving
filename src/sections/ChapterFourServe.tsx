@@ -5,6 +5,7 @@ import { clientSite } from "../content";
 export function ChapterFourServe() {
   return (
     <EditorialScene
+      staggerCopy
       id="story"
       titleId="chapter-four-title"
       media={{ image: crew, description: "Mullins Moving crew with a customer", position: "center 36%" }}

@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { ScrollReveal } from "./ScrollReveal";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import sectionTwoImage from "../assets/mm-section-2-v2.webp";
 
@@ -9,18 +10,12 @@ export function ChapterTwoBelongings() {
   const reducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: section, offset: ["start end", "end start"] });
   const photoScale = useTransform(scrollYProgress, [0, 1], [1.035, 1.09]);
-  const photoY = useTransform(scrollYProgress, [0, 1], ["-1%", "1%"]);
+  const photoY = useTransform(scrollYProgress, [0, 1], ["-1.5%", "2%"]);
 
   return (
     <section ref={section} className="chapter-two" aria-labelledby="chapter-two-title">
       <div className="chapter-two-inner">
-        <motion.div
-          className="chapter-two-copy"
-          initial={reducedMotion ? false : { y: 12 }}
-          whileInView={{ y: 0 }}
-          viewport={{ once: true, amount: .18 }}
-          transition={{ duration: .65, ease: "easeOut" }}
-        >
+        <ScrollReveal className="chapter-two-copy" stagger>
           <p className="section-eyebrow">What We Protect</p>
           <h2 id="chapter-two-title">We Move More Than Belongings.</h2>
           <p className="chapter-two-subhead">We move lives forward.</p>
@@ -31,7 +26,7 @@ export function ChapterTwoBelongings() {
             {statements.map((statement) => <li key={statement}>{statement}</li>)}
           </ul>
           <a className="text-cta" href="#standard">Discover The Mullins Standard</a>
-        </motion.div>
+        </ScrollReveal>
 
         <figure className="chapter-two-media">
           <motion.img

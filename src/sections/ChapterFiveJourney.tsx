@@ -1,5 +1,7 @@
+import { useRef } from "react";
+import { ScrollReveal } from "./ScrollReveal";
 import driverImage from "../assets/mullins-driver.webp";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 
 const journeyEase = [0.2, 0.8, 0.2, 1] as const;
 
@@ -27,51 +29,44 @@ const journeySteps = [
 ];
 
 export function ChapterFiveJourney() {
-  const prefersReducedMotion = useReducedMotion();
-
-  const revealItem = {
-    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 12 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: prefersReducedMotion ? 0.01 : 1,
-        ease: journeyEase,
-      },
-    },
-  };
+  const reducedMotion = useReducedMotion();
+  const section = useRef<HTMLElement>(null);
+  const timeline = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: photoProgress } = useScroll({
+    target: section,
+    offset: ["start end", "end start"],
+  });
+  const { scrollYProgress: routeProgress } = useScroll({
+    target: timeline,
+    offset: ["start 0.76", "end 0.76"],
+  });
+  const photoY = useTransform(photoProgress, [0, 1], ["-1.5%", "1.5%"]);
 
   return (
-    <motion.section
-      className="chapter-five"
-      aria-labelledby="chapter-five-title"
-      initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.18 }}
-      transition={{ duration: prefersReducedMotion ? 0.01 : 1.15, ease: journeyEase }}
-    >
-      <img className="chapter-five-image" src={driverImage} alt="" loading="lazy" decoding="async" />
+    <section ref={section} className="chapter-five" aria-labelledby="chapter-five-title">
+      <motion.img
+        className="chapter-five-image"
+        src={driverImage}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        style={reducedMotion ? undefined : { y: photoY, scale: 1.04 }}
+      />
       <div className="chapter-five-inner">
-        <motion.div
-          className="chapter-five-copy"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.34 }}
-          transition={{ staggerChildren: prefersReducedMotion ? 0 : 0.14 }}
-        >
-          <motion.p className="section-eyebrow" variants={revealItem}>
+        <ScrollReveal className="chapter-five-copy" stagger>
+          <p className="section-eyebrow">
             The Journey
-          </motion.p>
+          </p>
 
-          <motion.h2 id="chapter-five-title" variants={revealItem}>
+          <h2 id="chapter-five-title">
             Every Great Move
             <br />
             Begins Long Before
             <br />
             Moving Day.
-          </motion.h2>
+          </h2>
 
-          <motion.div className="chapter-five-body" variants={revealItem}>
+          <div className="chapter-five-body">
             <p>
               The smoothest moves are never rushed. They are carefully planned, thoughtfully
               organized, and professionally coordinated from the very first conversation.
@@ -80,45 +75,25 @@ export function ChapterFiveJourney() {
               By the time moving day arrives, every detail has already been considered—so you can
               focus on what&apos;s ahead instead of what&apos;s left behind.
             </p>
-          </motion.div>
+          </div>
 
-          <motion.a className="text-cta" href="#consultation" variants={revealItem}>
+          <a className="text-cta" href="#consultation">
             Plan Your Move
-          </motion.a>
-        </motion.div>
+          </a>
+        </ScrollReveal>
 
-        <motion.div
-          className="journey-timeline"
-          aria-label="Mullins moving process"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.24 }}
-        >
-          <motion.span
-            className="journey-route"
-            aria-hidden="true"
-            initial={{ scaleY: prefersReducedMotion ? 1 : 0 }}
-            whileInView={{ scaleY: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: prefersReducedMotion ? 0.01 : 1.25, ease: journeyEase }}
-          />
-
+        <div ref={timeline} className="journey-timeline" aria-label="Mullins moving process">
+          <span className="journey-route" aria-hidden="true">
+            <motion.span className="journey-route-progress" style={{ scaleY: reducedMotion ? 1 : routeProgress }} />
+          </span>
           <ol>
             {journeySteps.map((step, index) => (
               <motion.li
                 key={step.title}
-                variants={{
-                  hidden: { opacity: 0, y: prefersReducedMotion ? 0 : -10 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: {
-                      delay: prefersReducedMotion ? 0 : index * 0.1,
-                      duration: prefersReducedMotion ? 0.01 : 0.82,
-                      ease: journeyEase,
-                    },
-                  },
-                }}
+                initial={reducedMotion ? false : { opacity: .76, y: 8 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: .25 }}
+                transition={{ duration: reducedMotion ? 0 : .48, ease: journeyEase }}
               >
                 <span className="journey-marker" aria-hidden="true" />
                 <span className="journey-number">{String(index + 1).padStart(2, "0")}</span>
@@ -129,8 +104,8 @@ export function ChapterFiveJourney() {
               </motion.li>
             ))}
           </ol>
-        </motion.div>
+        </div>
       </div>
-    </motion.section>
+    </section>
   );
 }

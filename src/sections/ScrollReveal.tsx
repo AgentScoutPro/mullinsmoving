@@ -1,8 +1,24 @@
-import type { ReactNode } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef, type ReactNode } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 
-export function ScrollReveal({ children, className }: { children: ReactNode; className?: string }) {
+export function ScrollReveal({
+  children, className, stagger = false,
+}: {
+  children: ReactNode;
+  className?: string;
+  stagger?: boolean;
+}) {
   const reducedMotion = useReducedMotion();
+  const group = useRef<HTMLDivElement>(null);
+  const entered = useInView(group, { once: true, amount: "some", margin: "0px 0px -10% 0px" });
+
+  if (stagger) {
+    return (
+      <div ref={group} className={className} data-scroll-copy={reducedMotion || entered ? "visible" : "waiting"}>
+        {children}
+      </div>
+    );
+  }
 
   return (
     <motion.div

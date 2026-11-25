@@ -11,6 +11,7 @@ const craftsmanshipItems = [
 export function ChapterThreeStandard() {
   return (
     <EditorialScene
+      staggerCopy
       id="standard"
       titleId="chapter-three-title"
       media={{

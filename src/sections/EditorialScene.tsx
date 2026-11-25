@@ -12,7 +12,7 @@ export function SceneVisual({ image, description, video, position = "center" }: 
   const reducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: scene, offset: ["start end", "end start"] });
   const scale = useTransform(scrollYProgress, [0, 1], [1.025, 1.075]);
-  const y = useTransform(scrollYProgress, [0, 1], ["-1%", "1%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["-1.2%", "2%"]);
 
   function seek() {
     const video = player.current;
@@ -53,18 +53,19 @@ export function SceneVisual({ image, description, video, position = "center" }: 
 }
 
 export function EditorialScene({
-  id, titleId, media, imageFirst = false, children,
+  id, titleId, media, imageFirst = false, staggerCopy = false, children,
 }: {
   id?: string;
   titleId: string;
   media: SceneMedia;
   imageFirst?: boolean;
+  staggerCopy?: boolean;
   children: ReactNode;
 }) {
   return (
     <section className="editorial-scene" id={id} aria-labelledby={titleId} data-image-first={imageFirst}>
       <div className="editorial-inner">
-        <ScrollReveal className="editorial-copy">{children}</ScrollReveal>
+        <ScrollReveal className="editorial-copy" stagger={staggerCopy}>{children}</ScrollReveal>
         <SceneVisual {...media} />
       </div>
     </section>
