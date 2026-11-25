@@ -106,6 +106,7 @@ export function ChapterSixEastValley() {
           <motion.a className="text-cta" href="/service-areas" variants={revealItem}>
             Explore Our Service Areas
           </motion.a>
+          <p><a className="pillar-link" href="/contact#office-title">Find our Mesa office on Google Maps</a></p>
         </motion.div>
       </div>
 

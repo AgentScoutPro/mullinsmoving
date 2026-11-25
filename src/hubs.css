@@ -105,3 +105,25 @@
 
   .site-nav { column-gap: clamp(.55rem, 3vw, 1rem); }
 }
+
+.contact-location {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  align-items: center;
+  gap: 2rem;
+}
+
+.contact-location address {
+  color: var(--color-ivory);
+  font-style: normal;
+  line-height: 1.65;
+}
+
+.contact-location iframe {
+  display: block;
+  width: 100%;
+  min-height: 19rem;
+  aspect-ratio: 4 / 3;
+  border: 1px solid #d6ae6466;
+  border-radius: .5rem;
+}

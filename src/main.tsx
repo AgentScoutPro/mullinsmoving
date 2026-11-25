@@ -3,6 +3,8 @@ import { createRoot } from "react-dom/client";
 import "./styles.css";
 import "./hubs.css";
 import "./map-theme.css";
+import "./reviews.css";
+import { ContactPage } from "./pages/ContactPage";
 import { HubPage, isHubPath } from "./pages/HubPage";
 import { SiteLayout } from "./pages/SiteLayout";
 import { HomePage } from "./pages/HomePage";
@@ -12,7 +14,7 @@ const path = window.location.pathname.replace(/\/$/, "") || "/";
 createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
     <SiteLayout>
-      {isHubPath(path) ? <HubPage path={path} /> : <HomePage />}
+      {path === "/contact" ? <ContactPage /> : isHubPath(path) ? <HubPage path={path} /> : <HomePage />}
     </SiteLayout>
   </StrictMode>,
 );

@@ -6,7 +6,7 @@ import globalMap from "../assets/mm-section-7-global.webp";
 import { clientSite, phoneLabel, phoneLink, quoteLink } from "../content";
 import routes from "../hub-routes.json";
 
-type HubPath = keyof typeof routes;
+type HubPath = Exclude<keyof typeof routes, "/contact">;
 type Detail = { title: string; body: string; href?: string };
 type Hub = {
   eyebrow: string;

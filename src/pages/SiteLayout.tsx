@@ -28,6 +28,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         </a>
         <div className="footer-links">
           <a href={phoneLink}>{phoneLabel}</a>
+          <a href="/contact">Contact</a>
           <a href={clientSite + "/faq"}>FAQ</a>
           <a href="/#reviews">Reviews</a>
           <a href={clientSite + "/privacy-terms"}>Privacy &amp; Terms</a>

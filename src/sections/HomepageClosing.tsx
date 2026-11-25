@@ -1,7 +1,7 @@
 import { ScrollReveal } from "./ScrollReveal";
 import belongingsImage from "../assets/mm-section-2-v2.webp";
 import driverImage from "../assets/mullins-driver.webp";
-import crewImage from "../assets/mullins-crew.webp";
+import { GoogleReviews } from "./GoogleReviews";
 import { clientSite, phoneLabel, phoneLink, quoteLink } from "../content";
 
 const services = [
@@ -36,14 +36,7 @@ export function HomeServices() {
 export function HomepageClosing() {
   return (
     <>
-      <section className="closing-scene" id="reviews" aria-labelledby="reviews-title">
-        <img className="closing-media" src={crewImage} alt="" loading="lazy" decoding="async" />
-        <ScrollReveal className="closing-content">
-          <h2 id="reviews-title">Stories Worth Moving.</h2>
-          <p>Hear from families and businesses who chose Mullins for their move.</p>
-          <a className="text-cta" href={clientSite + "/reviews-stories"}>Read Reviews &amp; Stories</a>
-        </ScrollReveal>
-      </section>
+      <GoogleReviews />
       <section className="closing-scene" id="journal" aria-labelledby="journal-title">
         <img className="closing-media" src={driverImage} alt="" loading="lazy" decoding="async" />
         <ScrollReveal className="closing-content">
