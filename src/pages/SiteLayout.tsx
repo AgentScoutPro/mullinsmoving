@@ -11,7 +11,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
     <>
       <header className="site-header">
         <a className="brand-lockup" href="/" aria-label="Mullins Moving home">
-          <img src="/brand/mullins-logo-white.png" alt="Mullins Moving" width="472" height="239" />
+          <img src="/brand/mullins-logo-white.png" alt="Mullins Moving" width="500" height="262" />
         </a>
         <nav className="site-nav" aria-label="Primary navigation">
           <a href="/#story">Our Story</a>
@@ -24,7 +24,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       {children}
       <footer className="site-footer">
         <a href="/" aria-label="Mullins Moving home">
-          <img src="/brand/mullins-logo-white.png" alt="Mullins Moving. Top Tier Moving. Driven with Heart." width="472" height="239" loading="lazy" />
+          <img src="/brand/mullins-logo-white.png" alt="Mullins Moving. Top Tier Moving. Driven with Heart." width="500" height="262" loading="lazy" />
         </a>
         <div className="footer-links">
           <a href={phoneLink}>{phoneLabel}</a>

@@ -1,17 +1,19 @@
+import { motion, useReducedMotion } from "framer-motion";
+import type { ReactNode } from "react";
 import { ScrollReveal } from "../sections/ScrollReveal";
 import { EditorialScene, SceneVisual, type SceneMedia } from "../sections/EditorialScene";
 import servicesPhoto from "../assets/mullins-organized-truck-poster.webp";
 import localPhoto from "../assets/east-valley-arrival.webp";
 import truckPhoto from "../assets/mullins-truck.webp";
 import internationalPhoto from "../assets/loading-boxes.webp";
-import packingPhoto from "../assets/packing-dishes.webp";
-import consultationPhoto from "../assets/customer-handshake.webp";
-import patioPhoto from "../assets/mesa-patio.webp";
-import skylinePhoto from "../assets/arizona-skyline.webp";
-import loadingPhoto from "../assets/mullins-packing.webp";
-import belongingsPhoto from "../assets/mm-section-2-v2.webp";
-import relocationPhoto from "../assets/mm-section-7-global.webp";
-import crewPhoto from "../assets/mullins-crew.webp";
+import tableProtection from "../assets/mullins-protecting-table.webp";
+import specialtyItem from "../assets/mullins-specialty-item-protection.webp";
+import driveway from "../assets/mullins-driveway-access.webp";
+import neighborhoodTruck from "../assets/mullins-neighborhood-truck.webp";
+import truckRamp from "../assets/mullins-loading-truck-ramp.webp";
+import furniturePlacement from "../assets/mullins-team-placing-furniture.webp";
+import wrappedPieces from "../assets/mullins-wrapped-specialty-pieces.webp";
+import protectedInventory from "../assets/mullins-protected-household-inventory.webp";
 import { clientSite, phoneLabel, phoneLink, quoteLink } from "../content";
 import routes from "../hub-routes.json";
 
@@ -51,12 +53,12 @@ const hubs: Record<HubPath, Hub> = {
     feature: {
       title: "Care starts with the first box.",
       body: "From wrapping dishes to padding furniture and protecting floors, we plan the work around your home and what you need moved. Choose the services that fit your move.",
-      media: { image: packingPhoto, description: "A Mullins mover wraps dishes in packing paper" },
+      media: { image: tableProtection, description: "Two Mullins movers protect a large tabletop before transport", position: "44% 68%" },
     },
     closing: {
       title: "Tell us what your move needs.",
       body: "Share your dates, the amount you’re moving, and any pieces that need special care. We’ll help you decide where packing, protection, and placement make the most difference.",
-      media: { image: consultationPhoto, description: "A Mullins team member shakes hands with a customer" },
+      media: { image: specialtyItem, description: "A large padded piece is prepared for loading into the moving truck", position: "65% center" },
     },
     heading: "A move for every chapter.",
     details: [
@@ -90,12 +92,12 @@ const hubs: Record<HubPath, Hub> = {
     feature: {
       title: "Every neighborhood has its details.",
       body: "A gated estate in Paradise Valley and a condo in Old Town Scottsdale call for different plans. Share gate and HOA rules, elevator reservations, parking, or steep driveways early so the crew can plan truck access and protect your home.",
-      media: { image: patioPhoto, description: "" },
+      media: { image: driveway, description: "A Mullins truck positioned in a residential driveway", position: "44% center" },
     },
     closing: {
       title: "Moving across the Valley?",
       body: "Tell us where you’re starting, where you’re headed, and when you need to move. We’ll use those details to plan for both homes.",
-      media: { image: skylinePhoto, description: "" },
+      media: { image: neighborhoodTruck, description: "A purple and gold Mullins truck outside a home", position: "50% 43%" },
     },
     heading: "Find your city or community.",
     details: [
@@ -140,12 +142,12 @@ const hubs: Record<HubPath, Hub> = {
     feature: {
       title: "Your own truck. A clear plan.",
       body: "You book directly with Mullins. The same team handles loading, transportation, unloading, and placement. Your household travels on its own truck, with pickup and delivery arrangements agreed before move day.",
-      media: { image: loadingPhoto, description: "A Mullins mover loads wrapped furniture into a truck", position: "center 44%" },
+      media: { image: truckRamp, description: "A mover guides a wrapped piece up the truck ramp", position: "70% 52%" },
     },
     closing: {
       title: "Plan for the day you arrive.",
       body: "Tell us which rooms the furniture belongs in and what needs reassembly. We’ll account for those details alongside the delivery window and access at your new address.",
-      media: { image: belongingsPhoto, description: "Movers carry a framed family portrait inside a home", position: "72% center" },
+      media: { image: furniturePlacement, description: "Several movers work together to maneuver a large piece of furniture indoors", position: "55% 55%" },
     },
     heading: "What to expect on an interstate move.",
     details: [
@@ -177,12 +179,12 @@ const hubs: Record<HubPath, Hub> = {
     feature: {
       title: "Start with your destination.",
       body: "The right plan starts with what you’re taking and when you need it. Share which essentials need to arrive first, what can travel later, and which heirlooms, artwork, or furnishings may need special preparation.",
-      media: { image: relocationPhoto, description: "" },
+      media: { image: wrappedPieces, description: "Movers maneuver padded oversize pieces on wheeled dollies", position: "55% 60%" },
     },
     closing: {
       title: "Talk through the route with us.",
       body: "Tell us if this is a household, corporate or executive relocation, or a military move. Bring any employer or orders deadlines so the consultation can cover timing, responsibilities, and next steps.",
-      media: { image: crewPhoto, description: "Mullins Moving crew with a customer", position: "center 36%" },
+      media: { image: protectedInventory, description: "Wrapped household furniture staged for moving on a protected floor", position: "55% 60%" },
     },
     heading: "What to bring to your consultation.",
     details: [
@@ -203,18 +205,31 @@ const hubs: Record<HubPath, Hub> = {
   },
 };
 
-function HubDetails({ id, heading, details }: DetailSection & { id: string }) {
+function HubDetails({
+  id, heading, details, children,
+}: DetailSection & { id: string; children?: ReactNode }) {
+  const reducedMotion = useReducedMotion();
+
   return (
-    <section className="hub-width hub-section" aria-labelledby={id}>
-      <h2 id={id}>{heading}</h2>
-      <ScrollReveal className="hub-grid">
-        {details.map(({ title, body, href }) => (
-          <article key={title}>
-            <h3>{href ? <a href={href}>{title} <span aria-hidden="true">↗</span></a> : title}</h3>
-            <p>{body}</p>
-          </article>
-        ))}
+    <section className={children ? "hub-width hub-section hub-discover" : "hub-width hub-section"} aria-labelledby={id}>
+      <ScrollReveal>
+        <h2 id={id}>{heading}</h2>
       </ScrollReveal>
+      <div className="hub-grid">
+        {details.map(({ title, body, href }, index) => (
+          <motion.article
+            key={title}
+            initial={reducedMotion ? false : { opacity: .72, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: .2 }}
+            transition={{ duration: .5, delay: (index % 3) * .055, ease: "easeOut" }}
+          >
+            <h3>{href ? <a href={href}>{title} <span aria-hidden="true">{href.startsWith("/") ? "→" : "↗"}</span></a> : title}</h3>
+            <p>{body}</p>
+          </motion.article>
+        ))}
+      </div>
+      {children}
     </section>
   );
 }
@@ -256,23 +271,14 @@ export function HubPage({ path }: { path: HubPath }) {
       </EditorialScene>
       <HubDetails heading={hub.heading} details={hub.details} id="hub-details" />
       {hub.more && <HubDetails {...hub.more} id="hub-more" />}
-      <section className="hub-width hub-section hub-discover" aria-labelledby="hub-next">
-        <h2 id="hub-next">Keep planning your move.</h2>
-        <ScrollReveal className="hub-grid">
-          {(hub.next ?? destinations.slice(1)).map(({ title, body, href }) => (
-            <article key={title}>
-              <h3><a href={href}>{title} <span aria-hidden="true">→</span></a></h3>
-              <p>{body}</p>
-            </article>
-          ))}
-        </ScrollReveal>
-        <div className="hub-actions">
+      <HubDetails id="hub-next" heading="Keep planning your move." details={hub.next ?? destinations.slice(1)}>
+        <ScrollReveal className="hub-actions">
           {hub.resources?.map(({ label, href }) => (
             <a className="text-cta" href={href} key={href}>{label}</a>
           ))}
           <a className="text-cta" href={clientSite + "/faq"}>Moving FAQs</a>
-        </div>
-      </section>
+        </ScrollReveal>
+      </HubDetails>
       <EditorialScene
         titleId="hub-closing"
         media={{ photoMotion: "portrait", ...hub.closing.media }}

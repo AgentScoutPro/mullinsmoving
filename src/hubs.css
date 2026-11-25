@@ -102,6 +102,17 @@
 .hub-grid p { margin-bottom: 0; font-size: .92rem; }
 .hub-discover { border-top: 1px solid #c9a24b44; }
 
+@media (prefers-reduced-motion: no-preference) {
+  .hub-grid h3 a span {
+    display: inline-block;
+    transition: translate .24s var(--ease-luxury);
+  }
+
+  .hub-grid h3 a:is(:hover, :focus-visible) span {
+    translate: .2em -.15em;
+  }
+}
+
 @media (max-width: 700px) {
   .hub-hero::before {
     background: linear-gradient(90deg, #0b0f16ed, #0b0f169c),
