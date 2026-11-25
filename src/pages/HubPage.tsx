@@ -206,12 +206,12 @@ const hubs: Record<HubPath, Hub> = {
 };
 
 function HubDetails({
-  id, heading, details, children,
-}: DetailSection & { id: string; children?: ReactNode }) {
+  id, heading, details, interactive, children,
+}: DetailSection & { id: string; interactive: boolean; children?: ReactNode }) {
   const reducedMotion = useReducedMotion();
 
   return (
-    <section className={children ? "hub-width hub-section hub-discover" : "hub-width hub-section"} aria-labelledby={id}>
+    <section className={children ? "hub-width hub-section hub-discover" : "hub-width hub-section"} aria-labelledby={id} data-interactive-cards={interactive || undefined}>
       <ScrollReveal>
         <h2 id={id}>{heading}</h2>
       </ScrollReveal>
@@ -219,8 +219,8 @@ function HubDetails({
         {details.map(({ title, body, href }, index) => (
           <motion.article
             key={title}
-            initial={reducedMotion ? false : { opacity: .72, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={reducedMotion ? false : { opacity: .72, y: 16, scale: interactive ? .96 : 1 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, amount: .2 }}
             transition={{ duration: .5, delay: (index % 3) * .055, ease: "easeOut" }}
           >
@@ -240,6 +240,7 @@ export function isHubPath(path: string): path is HubPath {
 
 export function HubPage({ path }: { path: HubPath }) {
   const hub = hubs[path];
+  const interactiveCards = path === "/service-areas";
   const estimateLabel = path === "/international-moving"
     ? "Request an International Consultation"
     : "Request Your Free Estimate";
@@ -269,9 +270,9 @@ export function HubPage({ path }: { path: HubPath }) {
         <h2 id="hub-feature">{hub.feature.title}</h2>
         <p>{hub.feature.body}</p>
       </EditorialScene>
-      <HubDetails heading={hub.heading} details={hub.details} id="hub-details" />
-      {hub.more && <HubDetails {...hub.more} id="hub-more" />}
-      <HubDetails id="hub-next" heading="Keep planning your move." details={hub.next ?? destinations.slice(1)}>
+      <HubDetails heading={hub.heading} details={hub.details} id="hub-details" interactive={interactiveCards} />
+      {hub.more && <HubDetails {...hub.more} id="hub-more" interactive={interactiveCards} />}
+      <HubDetails id="hub-next" heading="Keep planning your move." details={hub.next ?? destinations.slice(1)} interactive={interactiveCards}>
         <ScrollReveal className="hub-actions">
           {hub.resources?.map(({ label, href }) => (
             <a className="text-cta" href={href} key={href}>{label}</a>
