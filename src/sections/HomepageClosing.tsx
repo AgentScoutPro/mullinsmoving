@@ -46,7 +46,12 @@ export function HomepageClosing() {
       <EditorialScene
         id="journal"
         titleId="journal-title"
-        media={{ image: journalPhoto, description: "A mover wraps dishes in packing paper" }}
+        media={{
+          image: journalPhoto,
+          description: "A mover wraps dishes in packing paper",
+          photoMotion: "story",
+        }}
+        staggerCopy
         imageFirst
       >
         <h2 id="journal-title">The Arizona Moving Journal.</h2>
@@ -56,7 +61,12 @@ export function HomepageClosing() {
       <EditorialScene
         id="consultation"
         titleId="consultation-title"
-        media={{ image: consultationPhoto, description: "A member of the Mullins Moving team shakes hands with a customer" }}
+        media={{
+          image: consultationPhoto,
+          description: "A member of the Mullins Moving team shakes hands with a customer",
+          photoMotion: "portrait",
+        }}
+        staggerCopy
       >
         <h2 id="consultation-title">Wherever Life Takes You, We’ll Help You Get There.</h2>
         <p>Tell us where you’re headed and what matters most about your move.</p>

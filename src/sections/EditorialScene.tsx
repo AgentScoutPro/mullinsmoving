@@ -11,17 +11,21 @@ type SceneMedia = {
   photoMotion?: "story" | "portrait";
 };
 
-export function SceneVisual({ image, description, video, position = "center", photoMotion }: SceneMedia) {
+export function SceneVisual({
+  image, description, video, position = "center", photoMotion, className = "editorial-visual",
+}: SceneMedia & { className?: string }) {
   const scene = useRef<HTMLElement>(null);
   const player = useRef<HTMLVideoElement>(null);
   const nearScene = useInView(scene, { margin: "280px 0px", once: true });
   const reducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: scene, offset: ["start end", "end start"] });
   const scale = useTransform(scrollYProgress, [0, 1], [1.025, 1.075]);
-  const travel = photoMotion === "portrait" ? 1 : 2;
-  const y = useTransform(scrollYProgress, [0, 1],
-    photoMotion ? [`-${travel}%`, `${travel}%`] : ["-1.2%", "2%"]);
-  const photoScale = photoMotion === "portrait" ? 1.03 : 1.055;
+  const y = useTransform(scrollYProgress, [0, 1], ["-1.2%", "2%"]);
+  const parallaxProgress = useTransform(scrollYProgress, [.14, .86], [-1, 1]);
+  const animatedPhoto = video ? undefined : photoMotion;
+  const imageMotion = reducedMotion || video ? undefined : animatedPhoto
+    ? { "--photo-parallax-progress": parallaxProgress }
+    : { scale, y };
 
   function seek() {
     const video = player.current;
@@ -34,18 +38,14 @@ export function SceneVisual({ image, description, video, position = "center", ph
   useMotionValueEvent(scrollYProgress, "change", seek);
 
   return (
-    <figure ref={scene} className="editorial-visual">
+    <figure ref={scene} className={className}>
       <motion.img
-        className={photoMotion ? "story-photo" : undefined}
+        data-photo-motion={animatedPhoto}
         src={image}
         alt={description}
         loading="lazy"
         decoding="async"
-        style={{
-          objectPosition: position,
-          scale: reducedMotion || video ? 1 : photoMotion ? photoScale : scale,
-          y: reducedMotion || video ? 0 : y,
-        }}
+        style={{ objectPosition: position, ...imageMotion }}
       />
       {video && nearScene && !reducedMotion && (
         <video

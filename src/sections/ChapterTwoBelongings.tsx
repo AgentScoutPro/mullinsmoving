@@ -1,18 +1,12 @@
-import { useRef } from "react";
+import { SceneVisual } from "./EditorialScene";
 import { ScrollReveal } from "./ScrollReveal";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import sectionTwoImage from "../assets/mm-section-2-v2.webp";
 
 const statements = ["Carefully wrapped", "Professionally protected", "Handled like our own"];
 
 export function ChapterTwoBelongings() {
-  const section = useRef<HTMLElement>(null);
-  const reducedMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: section, offset: ["start end", "end start"] });
-  const photoY = useTransform(scrollYProgress, [0, 1], ["-2%", "2%"]);
-
   return (
-    <section ref={section} className="chapter-two" aria-labelledby="chapter-two-title">
+    <section className="chapter-two" aria-labelledby="chapter-two-title">
       <div className="chapter-two-inner">
         <ScrollReveal className="chapter-two-copy" stagger>
           <p className="section-eyebrow">What We Protect</p>
@@ -27,16 +21,13 @@ export function ChapterTwoBelongings() {
           <a className="text-cta" href="#standard">Discover The Mullins Standard</a>
         </ScrollReveal>
 
-        <figure className="chapter-two-media">
-          <motion.img
-            className="story-photo"
-            src={sectionTwoImage}
-            alt="Movers carrying a framed family portrait in a home"
-            style={reducedMotion ? undefined : { scale: 1.055, y: photoY }}
-            loading="lazy"
-            decoding="async"
-          />
-        </figure>
+        <SceneVisual
+          className="chapter-two-media"
+          image={sectionTwoImage}
+          description="Movers carrying a framed family portrait in a home"
+          position="72% center"
+          photoMotion="story"
+        />
       </div>
     </section>
   );
