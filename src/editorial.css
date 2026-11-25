@@ -69,6 +69,13 @@
   object-fit: cover;
 }
 
+.hub-hero > .editorial-visual {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  min-height: 0;
+}
+
 .editorial-scene[data-image-first="true"] .editorial-inner {
   grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
 }

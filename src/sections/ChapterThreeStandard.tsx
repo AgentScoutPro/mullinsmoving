@@ -1,5 +1,5 @@
 import { EditorialScene } from "./EditorialScene";
-import poster from "../assets/mullins-protection-poster.webp";
+import protectionPhoto from "../assets/mullins-packing.webp";
 import { clientSite } from "../content";
 
 const craftsmanshipItems = [
@@ -14,10 +14,9 @@ export function ChapterThreeStandard() {
       id="standard"
       titleId="chapter-three-title"
       media={{
-        image: poster,
-        video: "/videos/mullins-protection-scroll.mp4",
-        description: "A mover checks wrapped furniture before loading",
-        position: "64% center",
+        image: protectionPhoto,
+        description: "A Mullins Moving crew member loading wrapped furniture into the truck",
+        position: "center 44%",
       }}
     >
       <p className="section-eyebrow">White Glove Craftsmanship</p>

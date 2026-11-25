@@ -1,5 +1,6 @@
 import { ScrollReveal } from "../sections/ScrollReveal";
-import servicesPhoto from "../assets/mullins-packing.webp";
+import { SceneVisual } from "../sections/EditorialScene";
+import servicesPhoto from "../assets/mullins-organized-truck-poster.webp";
 import localPhoto from "../assets/east-valley-arrival.webp";
 import truckPhoto from "../assets/mullins-truck.webp";
 import internationalPhoto from "../assets/loading-boxes.webp";
@@ -92,7 +93,15 @@ export function HubPage({ path }: { path: HubPath }) {
   return (
     <main className="hub-page" id="main-content">
       <section className="hub-hero" aria-labelledby="hub-title">
-        <img src={hub.image} alt="" fetchPriority="high" />
+        {path === "/services" ? (
+          <SceneVisual
+            image={hub.image}
+            description="Wrapped furniture and labeled boxes secured inside a moving truck"
+            video="/videos/mullins-organized-truck-scroll.mp4"
+          />
+        ) : (
+          <img src={hub.image} alt="" fetchPriority="high" />
+        )}
         <ScrollReveal className="hub-width">
           <nav className="hub-breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">{routes[path].title}</span>
