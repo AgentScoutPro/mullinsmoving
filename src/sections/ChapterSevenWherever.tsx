@@ -1,4 +1,3 @@
-import { clientSite } from "../content";
 import { motion, useReducedMotion } from "framer-motion";
 import globalRelocationImage from "../assets/mm-section-7-global.webp";
 
@@ -9,22 +8,22 @@ const pillars = [
     title: "Local Arizona Moving",
     description: "Plan your move across the Valley or elsewhere in Arizona.",
     id: "local-moving",
-    href: "#service-areas",
+    href: "/service-areas",
     link: "See Arizona service areas",
   },
   {
     title: "Long-Distance Moving",
     description: "Coordinate your packing, timeline, and delivery across state lines.",
     id: "long-distance",
-    href: clientSite + "/long-distance-moving",
+    href: "/long-distance-moving",
     link: "Explore interstate moving",
   },
   {
     title: "International Relocation",
     description: "Talk through your destination, household goods, and timing with Mullins.",
     id: "international",
-    href: "#consultation",
-    link: "Discuss an overseas move",
+    href: "/international-moving",
+    link: "Explore international relocation",
   },
 ];
 

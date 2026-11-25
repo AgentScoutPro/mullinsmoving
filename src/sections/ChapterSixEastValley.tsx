@@ -103,7 +103,7 @@ export function ChapterSixEastValley() {
             ))}
           </motion.ul>
 
-          <motion.a className="text-cta" href="https://www.mullins-moving.com/service-areas" variants={revealItem}>
+          <motion.a className="text-cta" href="/service-areas" variants={revealItem}>
             Explore Our Service Areas
           </motion.a>
         </motion.div>

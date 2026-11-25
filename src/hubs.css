@@ -1,0 +1,107 @@
+.hub-width {
+  width: min(100% - 2 * var(--header-x), 75rem);
+  margin-inline: auto;
+}
+
+.hub-hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: center;
+  min-height: min(74svh, 46rem);
+  padding: clamp(3rem, 9vw, 8rem) 0;
+}
+
+.hub-hero > img,
+.hub-hero::before {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hub-hero > img {
+  z-index: -2;
+  object-fit: cover;
+  object-position: 66% center;
+}
+
+.hub-hero::before {
+  z-index: -1;
+  content: "";
+  background: linear-gradient(90deg, #0b0f16fa, #0b0f16dc 42%, #0b0f1650),
+    linear-gradient(0deg, #0b0f16, transparent 38%);
+}
+
+.hub-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-bottom: clamp(1.75rem, 5vw, 3rem);
+  color: var(--color-muted);
+  font-size: .76rem;
+}
+
+.hub-breadcrumb a { text-decoration: underline; }
+
+.hub-hero h1 {
+  max-width: 15ch;
+  font-size: clamp(2.65rem, 6vw, 6rem);
+  line-height: .98;
+}
+
+.hub-hero h1 + p,
+.hub-grid p {
+  color: var(--color-ivory);
+  line-height: 1.7;
+}
+
+.hub-hero h1 + p { max-width: 33rem; }
+
+.hub-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2rem;
+  margin-top: 1.85rem;
+}
+
+.hub-actions .pillar-link { margin-top: 0; }
+
+.hub-section { padding-block: clamp(2.5rem, 6vw, 5rem); }
+
+.hub-section h2 {
+  margin: 0 0 1.8rem;
+  font: 400 clamp(2rem, 4vw, 3.75rem)/1.08 var(--font-display);
+}
+
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: 1rem;
+}
+
+.hub-grid article {
+  padding: clamp(1.15rem, 3vw, 2rem);
+  background: #151820;
+  border-top: 1px solid #c9a24b80;
+}
+
+.hub-grid h3 {
+  margin: 0;
+  font: 500 1.4rem/1.2 var(--font-display);
+}
+
+.hub-grid h3 a:hover { color: var(--color-gold-bright); }
+.hub-grid h3 span { color: var(--color-gold-bright); font-size: .8em; }
+.hub-grid p { margin-bottom: 0; font-size: .92rem; }
+.hub-discover { border-top: 1px solid #c9a24b44; }
+
+@media (max-width: 700px) {
+  .hub-hero::before {
+    background: linear-gradient(90deg, #0b0f16ed, #0b0f169c),
+      linear-gradient(0deg, #0b0f16, transparent 55%);
+  }
+
+  .site-nav { column-gap: clamp(.55rem, 3vw, 1rem); }
+}

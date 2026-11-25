@@ -70,7 +70,7 @@ export function ChapterOneHero() {
             Begins With <em className="hero-headline-accent">Trust.</em>
           </h1>
           <p className="hero-copy">
-            White-glove care for your move across Arizona, across the country, or overseas.
+            White-glove moving from Phoenix and the East Valley to your next home in Arizona, across the country, or overseas.
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#consultation">

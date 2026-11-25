@@ -1,0 +1,18 @@
+{
+  "/services": {
+    "title": "Moving Services",
+    "description": "Explore Mullins Moving’s white-glove, residential, commercial, and specialty moving services."
+  },
+  "/service-areas": {
+    "title": "Phoenix & East Valley Moving Service Areas",
+    "description": "Explore local moving services in Gilbert, Scottsdale, Mesa, Chandler, Queen Creek, and the Phoenix area."
+  },
+  "/long-distance-moving": {
+    "title": "Long-Distance Moving from Phoenix",
+    "description": "Plan an interstate move from Arizona with a dedicated truck, a written quote, and the Mullins Moving team."
+  },
+  "/international-moving": {
+    "title": "International Moving Consultation",
+    "description": "Discuss your overseas relocation, destination, timing, and household inventory with Mullins Moving."
+  }
+}

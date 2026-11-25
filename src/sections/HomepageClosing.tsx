@@ -4,12 +4,11 @@ import crewImage from "../assets/mullins-crew.webp";
 import { clientSite, phoneLabel, phoneLink, quoteLink } from "../content";
 
 const services = [
-  { label: "Residential moving", path: "/residential-moving" },
-  { label: "Commercial moving", path: "/commercial-moving-services" },
-  { label: "Long-distance moving", path: "/long-distance-moving" },
-  { label: "International relocation", path: "#international" },
-  { label: "White-glove moving", path: "/white-glove-moving-service" },
-  { label: "Packing, unpacking & storage", path: "/services" },
+  { label: "Residential moving", href: clientSite + "/residential-moving" },
+  { label: "Commercial moving", href: clientSite + "/commercial-moving-services" },
+  { label: "Long-distance moving", href: "/long-distance-moving" },
+  { label: "International relocation", href: "/international-moving" },
+  { label: "White-glove moving", href: clientSite + "/white-glove-moving-service" },
 ];
 
 export function HomeServices() {
@@ -19,14 +18,15 @@ export function HomeServices() {
       <div className="closing-content">
         <h2 id="services-title">Services Without Compromise.</h2>
         <ul className="service-index">
-          {services.map(({ label, path }) => (
+          {services.map(({ label, href }) => (
             <li key={label}>
-              <a href={path.startsWith("#") ? path : clientSite + path}>
+              <a href={href}>
                 {label} <span aria-hidden="true">↗</span>
               </a>
             </li>
           ))}
         </ul>
+        <a className="text-cta" href="/services">Explore All Moving Services</a>
       </div>
     </section>
   );
