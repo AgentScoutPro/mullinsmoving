@@ -30,7 +30,7 @@ export function ChapterFiveJourney() {
   const prefersReducedMotion = useReducedMotion();
 
   const revealItem = {
-    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 40 },
+    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 12 },
     visible: {
       opacity: 1,
       y: 0,
@@ -45,7 +45,7 @@ export function ChapterFiveJourney() {
     <motion.section
       className="chapter-five"
       aria-labelledby="chapter-five-title"
-      initial={prefersReducedMotion ? false : { opacity: 0, y: 40 }}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.18 }}
       transition={{ duration: prefersReducedMotion ? 0.01 : 1.15, ease: journeyEase }}
@@ -108,7 +108,7 @@ export function ChapterFiveJourney() {
               <motion.li
                 key={step.title}
                 variants={{
-                  hidden: { opacity: 0, y: prefersReducedMotion ? 0 : -18 },
+                  hidden: { opacity: 0, y: prefersReducedMotion ? 0 : -10 },
                   visible: {
                     opacity: 1,
                     y: 0,

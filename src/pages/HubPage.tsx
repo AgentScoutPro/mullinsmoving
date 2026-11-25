@@ -1,3 +1,4 @@
+import { ScrollReveal } from "../sections/ScrollReveal";
 import servicesPhoto from "../assets/mullins-packing.webp";
 import localMap from "../assets/mm-image-map.webp";
 import truckPhoto from "../assets/mullins-truck.webp";
@@ -92,7 +93,7 @@ export function HubPage({ path }: { path: HubPath }) {
     <main className="hub-page" id="main-content">
       <section className="hub-hero" aria-labelledby="hub-title">
         <img src={hub.image} alt="" fetchPriority="high" />
-        <div className="hub-width">
+        <ScrollReveal className="hub-width">
           <nav className="hub-breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">{routes[path].title}</span>
           </nav>
@@ -103,32 +104,32 @@ export function HubPage({ path }: { path: HubPath }) {
             <a className="button button-primary" href={quoteLink}>Request Your Free Estimate</a>
             <a className="pillar-link" href={phoneLink}>Call {phoneLabel}</a>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
       <section className="hub-width hub-section" aria-labelledby="hub-details">
         <h2 id="hub-details">{hub.heading}</h2>
-        <div className="hub-grid">
+        <ScrollReveal className="hub-grid">
           {hub.details.map(({ title, body, href }) => (
             <article key={title}>
               <h3>{href ? <a href={href}>{title} <span aria-hidden="true">↗</span></a> : title}</h3>
               <p>{body}</p>
             </article>
           ))}
-        </div>
+        </ScrollReveal>
         {path === "/service-areas" && (
           <a className="text-cta" href={clientSite + "/service-areas"}>See the full service-area directory</a>
         )}
       </section>
       <section className="hub-width hub-section hub-discover" aria-labelledby="hub-next">
         <h2 id="hub-next">Keep planning your move.</h2>
-        <div className="hub-grid">
+        <ScrollReveal className="hub-grid">
           {(hub.next ?? destinations.slice(1)).map(({ title, body, href }) => (
             <article key={title}>
               <h3><a href={href}>{title} <span aria-hidden="true">→</span></a></h3>
               <p>{body}</p>
             </article>
           ))}
-        </div>
+        </ScrollReveal>
         <div className="hub-actions">
           <a className="button button-primary" href={quoteLink}>Request Your Free Estimate</a>
           <a className="pillar-link" href={clientSite + "/faq"}>Moving FAQs</a>

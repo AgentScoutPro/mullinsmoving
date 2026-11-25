@@ -17,7 +17,7 @@ export function ChapterThreeStandard() {
   const imageY = useTransform(scrollYProgress, [0.42, 0.86], prefersReducedMotion ? [0, 0] : [16, -16]);
 
   const revealItem = {
-    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 40 },
+    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 12 },
     visible: {
       opacity: 1,
       y: 0,
@@ -33,7 +33,7 @@ export function ChapterThreeStandard() {
       className="chapter-three"
       id="standard"
       aria-labelledby="chapter-three-title"
-      initial={prefersReducedMotion ? false : { opacity: 0, y: 48 }}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: prefersReducedMotion ? 0.01 : 1.15, ease: standardEase }}

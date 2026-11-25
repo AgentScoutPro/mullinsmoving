@@ -24,7 +24,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       {children}
       <footer className="site-footer">
         <a href="/" aria-label="Mullins Moving home">
-          <img src="/brand/mullins-logo.png" alt="Mullins Moving. Top Tier Moving. Driven with Heart." width="424" height="216" loading="lazy" />
+          <img src="/brand/mullins-logo-white.png" alt="Mullins Moving. Top Tier Moving. Driven with Heart." width="472" height="239" loading="lazy" />
         </a>
         <div className="footer-links">
           <a href={phoneLink}>{phoneLabel}</a>

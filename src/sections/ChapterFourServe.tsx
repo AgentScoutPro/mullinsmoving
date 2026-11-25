@@ -9,7 +9,7 @@ export function ChapterFourServe() {
   const imageY = useTransform(scrollYProgress, [0.58, 0.98], prefersReducedMotion ? [0, 0] : [14, -14]);
 
   const revealItem = {
-    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 40 },
+    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 12 },
     visible: {
       opacity: 1,
       y: 0,
@@ -25,7 +25,7 @@ export function ChapterFourServe() {
       className="chapter-four"
       id="story"
       aria-labelledby="chapter-four-title"
-      initial={prefersReducedMotion ? false : { opacity: 0, y: 48 }}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.18 }}
       transition={{ duration: prefersReducedMotion ? 0.01 : 1.15, ease: serveEase }}

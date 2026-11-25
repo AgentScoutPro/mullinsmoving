@@ -31,7 +31,7 @@ export function ChapterSevenWherever() {
   const prefersReducedMotion = useReducedMotion();
 
   const revealItem = {
-    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 40 },
+    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 12 },
     visible: {
       opacity: 1,
       y: 0,
@@ -47,7 +47,7 @@ export function ChapterSevenWherever() {
       className="chapter-seven"
       id="destinations"
       aria-labelledby="chapter-seven-title"
-      initial={prefersReducedMotion ? false : { opacity: 0, y: 40 }}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.18 }}
       transition={{ duration: prefersReducedMotion ? 0.01 : 1.15, ease: globalEase }}
@@ -98,7 +98,7 @@ export function ChapterSevenWherever() {
               <motion.article
                 key={pillar.title}
                 id={pillar.id}
-                initial={{ opacity: 0, x: prefersReducedMotion ? 0 : -18 }}
+                initial={{ opacity: 0, x: prefersReducedMotion ? 0 : -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.38 }}
                 transition={{

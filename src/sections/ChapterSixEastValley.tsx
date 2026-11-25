@@ -18,7 +18,7 @@ export function ChapterSixEastValley() {
   const prefersReducedMotion = useReducedMotion();
 
   const revealItem = {
-    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 40 },
+    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 12 },
     visible: {
       opacity: 1,
       y: 0,
@@ -34,7 +34,7 @@ export function ChapterSixEastValley() {
       className="chapter-six"
       id="service-areas"
       aria-labelledby="chapter-six-title"
-      initial={prefersReducedMotion ? false : { opacity: 0, y: 40 }}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.18 }}
       transition={{ duration: prefersReducedMotion ? 0.01 : 1.15, ease: eastValleyEase }}
