@@ -3,16 +3,25 @@ import { useRef } from "react";
 import { motion, useInView, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
 
-type SceneMedia = { image: string; description: string; video?: string; position?: string };
+type SceneMedia = {
+  image: string;
+  description: string;
+  video?: string;
+  position?: string;
+  photoMotion?: "story" | "portrait";
+};
 
-export function SceneVisual({ image, description, video, position = "center" }: SceneMedia) {
+export function SceneVisual({ image, description, video, position = "center", photoMotion }: SceneMedia) {
   const scene = useRef<HTMLElement>(null);
   const player = useRef<HTMLVideoElement>(null);
   const nearScene = useInView(scene, { margin: "280px 0px", once: true });
   const reducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: scene, offset: ["start end", "end start"] });
   const scale = useTransform(scrollYProgress, [0, 1], [1.025, 1.075]);
-  const y = useTransform(scrollYProgress, [0, 1], ["-1.2%", "2%"]);
+  const travel = photoMotion === "portrait" ? 1 : 2;
+  const y = useTransform(scrollYProgress, [0, 1],
+    photoMotion ? [`-${travel}%`, `${travel}%`] : ["-1.2%", "2%"]);
+  const photoScale = photoMotion === "portrait" ? 1.03 : 1.055;
 
   function seek() {
     const video = player.current;
@@ -27,11 +36,16 @@ export function SceneVisual({ image, description, video, position = "center" }: 
   return (
     <figure ref={scene} className="editorial-visual">
       <motion.img
+        className={photoMotion ? "story-photo" : undefined}
         src={image}
         alt={description}
         loading="lazy"
         decoding="async"
-        style={{ objectPosition: position, scale: reducedMotion || video ? 1 : scale, y: reducedMotion || video ? 0 : y }}
+        style={{
+          objectPosition: position,
+          scale: reducedMotion || video ? 1 : photoMotion ? photoScale : scale,
+          y: reducedMotion || video ? 0 : y,
+        }}
       />
       {video && nearScene && !reducedMotion && (
         <video

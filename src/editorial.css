@@ -134,22 +134,34 @@
 
 [data-scroll-copy] > * {
   --copy-delay: 0ms;
-  transition: opacity .58s var(--ease-luxury), translate .58s var(--ease-luxury);
+  transition: opacity .52s var(--ease-luxury), translate .52s var(--ease-luxury);
   transition-delay: var(--copy-delay);
 }
 
-[data-scroll-copy] > :nth-child(2) { --copy-delay: 55ms; }
-[data-scroll-copy] > :nth-child(3) { --copy-delay: 110ms; }
+[data-scroll-copy] > :nth-child(2) { --copy-delay: 45ms; }
+[data-scroll-copy] > :nth-child(3) { --copy-delay: 105ms; }
 [data-scroll-copy] > :nth-child(4) { --copy-delay: 155ms; }
-[data-scroll-copy] > :nth-child(n+5) { --copy-delay: 195ms; }
+[data-scroll-copy] > :nth-child(5) { --copy-delay: 205ms; }
+[data-scroll-copy] > :nth-child(n+6) { --copy-delay: 245ms; }
 
 [data-scroll-copy="waiting"]:not(:focus-within) > * {
-  opacity: .79;
-  translate: 0 8px;
+  opacity: .72;
+  translate: 0 14px;
   transition-delay: 0ms;
 }
 
-.journey-route-progress {
+[data-scroll-copy]:focus-within > * {
+  transition: none;
+}
+
+@media (max-width: 780px) {
+  .story-photo {
+    transform: none !important;
+  }
+}
+
+.journey-route-progress,
+.journey-marker-fill {
   display: block;
   width: 100%;
   height: 100%;
@@ -157,7 +169,26 @@
   transform-origin: top;
 }
 
+.journey-marker-fill {
+  border-radius: inherit;
+}
+
+
 @media (prefers-reduced-motion: reduce) {
+  [data-scroll-copy] > * {
+    transition: none;
+  }
+
+  .story-photo,
+  .journey-step-copy {
+    transform: none !important;
+  }
+
+  .journey-step-copy,
+  .journey-marker-fill {
+    opacity: 1 !important;
+  }
+
   [data-scroll-copy="waiting"]:not(:focus-within) > * {
     opacity: 1;
     translate: none;

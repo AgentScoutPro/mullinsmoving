@@ -9,8 +9,7 @@ export function ChapterTwoBelongings() {
   const section = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: section, offset: ["start end", "end start"] });
-  const photoScale = useTransform(scrollYProgress, [0, 1], [1.035, 1.09]);
-  const photoY = useTransform(scrollYProgress, [0, 1], ["-1.5%", "2%"]);
+  const photoY = useTransform(scrollYProgress, [0, 1], ["-2%", "2%"]);
 
   return (
     <section ref={section} className="chapter-two" aria-labelledby="chapter-two-title">
@@ -30,9 +29,10 @@ export function ChapterTwoBelongings() {
 
         <figure className="chapter-two-media">
           <motion.img
+            className="story-photo"
             src={sectionTwoImage}
             alt="Movers carrying a framed family portrait in a home"
-            style={reducedMotion ? undefined : { scale: photoScale, y: photoY }}
+            style={reducedMotion ? undefined : { scale: 1.055, y: photoY }}
             loading="lazy"
             decoding="async"
           />

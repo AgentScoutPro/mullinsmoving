@@ -18,6 +18,7 @@ export function ChapterThreeStandard() {
         image: protectionPhoto,
         description: "A Mullins Moving crew member loading wrapped furniture into the truck",
         position: "center 44%",
+        photoMotion: "story",
       }}
     >
       <p className="section-eyebrow">White Glove Craftsmanship</p>

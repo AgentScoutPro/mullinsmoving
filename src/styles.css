@@ -867,17 +867,19 @@ h1 {
 
 .journey-timeline {
   position: relative;
-  padding-left: 2.6rem;
+  --journey-indent: 2.6rem;
+  --journey-route-x: .46rem;
+  --journey-marker-y: calc(.42rem + 4.5px);
+  padding-left: var(--journey-indent);
 }
 
 .journey-route {
   position: absolute;
-  top: .4rem;
+  top: var(--journey-marker-y);
   bottom: .4rem;
-  left: .46rem;
+  left: var(--journey-route-x);
   width: 1px;
   background: rgba(201, 162, 75, .42);
-  transform-origin: top;
 }
 
 .journey-timeline ol {
@@ -905,7 +907,7 @@ h1 {
 .journey-marker {
   position: absolute;
   top: .42rem;
-  left: -2.48rem;
+  left: calc(var(--journey-route-x) - var(--journey-indent) - 4px);
   width: 9px;
   height: 9px;
   border: 1px solid rgba(246, 202, 119, .88);
@@ -987,11 +989,8 @@ h1 {
 
   .journey-timeline {
     width: 100%;
-    padding-left: 2rem;
-  }
-
-  .journey-route {
-    left: .3rem;
+    --journey-indent: 2rem;
+    --journey-route-x: .3rem;
   }
 
   .journey-timeline ol {
@@ -1002,10 +1001,6 @@ h1 {
     grid-template-columns: 3.2rem minmax(0, 1fr);
     gap: 1rem;
     padding-bottom: 2.1rem;
-  }
-
-  .journey-marker {
-    left: -2.04rem;
   }
 
   .journey-number {

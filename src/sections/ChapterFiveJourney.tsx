@@ -3,6 +3,7 @@ import { ScrollReveal } from "./ScrollReveal";
 import driverImage from "../assets/mullins-driver.webp";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 
+const routeReadingLine = 0.76;
 const journeyEase = [0.2, 0.8, 0.2, 1] as const;
 
 const journeySteps = [
@@ -28,24 +29,54 @@ const journeySteps = [
   },
 ];
 
+function JourneyStep({ step, index }: { step: (typeof journeySteps)[number]; index: number }) {
+  const marker = useRef<HTMLSpanElement>(null);
+  const reducedMotion = useReducedMotion();
+  const { scrollYProgress: markerProgress } = useScroll({
+    target: marker,
+    offset: [`center ${routeReadingLine}`, `end ${routeReadingLine - .015}`],
+  });
+  const copyReveal = {
+    initial: reducedMotion ? false : { opacity: .78, y: 10 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, amount: .25 } as const,
+    transition: { duration: reducedMotion ? 0 : .48, ease: journeyEase },
+  };
+
+  return (
+    <li>
+      <span ref={marker} className="journey-marker" aria-hidden="true">
+        <motion.span className="journey-marker-fill" style={{ opacity: reducedMotion ? 1 : markerProgress }} />
+      </span>
+      <motion.span className="journey-number journey-step-copy" {...copyReveal}>
+        {String(index + 1).padStart(2, "0")}
+      </motion.span>
+      <motion.div className="journey-step-copy" {...copyReveal}>
+        <h3>{step.title}</h3>
+        <p>{step.description}</p>
+      </motion.div>
+    </li>
+  );
+}
+
 export function ChapterFiveJourney() {
   const reducedMotion = useReducedMotion();
   const section = useRef<HTMLElement>(null);
-  const timeline = useRef<HTMLDivElement>(null);
+  const route = useRef<HTMLSpanElement>(null);
   const { scrollYProgress: photoProgress } = useScroll({
     target: section,
     offset: ["start end", "end start"],
   });
   const { scrollYProgress: routeProgress } = useScroll({
-    target: timeline,
-    offset: ["start 0.76", "end 0.76"],
+    target: route,
+    offset: [`start ${routeReadingLine}`, `end ${routeReadingLine}`],
   });
   const photoY = useTransform(photoProgress, [0, 1], ["-1.5%", "1.5%"]);
 
   return (
     <section ref={section} className="chapter-five" aria-labelledby="chapter-five-title">
       <motion.img
-        className="chapter-five-image"
+        className="chapter-five-image story-photo"
         src={driverImage}
         alt=""
         loading="lazy"
@@ -82,26 +113,13 @@ export function ChapterFiveJourney() {
           </a>
         </ScrollReveal>
 
-        <div ref={timeline} className="journey-timeline" aria-label="Mullins moving process">
-          <span className="journey-route" aria-hidden="true">
+        <div className="journey-timeline" aria-label="Mullins moving process">
+          <span ref={route} className="journey-route" aria-hidden="true">
             <motion.span className="journey-route-progress" style={{ scaleY: reducedMotion ? 1 : routeProgress }} />
           </span>
           <ol>
             {journeySteps.map((step, index) => (
-              <motion.li
-                key={step.title}
-                initial={reducedMotion ? false : { opacity: .76, y: 8 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: .25 }}
-                transition={{ duration: reducedMotion ? 0 : .48, ease: journeyEase }}
-              >
-                <span className="journey-marker" aria-hidden="true" />
-                <span className="journey-number">{String(index + 1).padStart(2, "0")}</span>
-                <div>
-                  <h3>{step.title}</h3>
-                  <p>{step.description}</p>
-                </div>
-              </motion.li>
+              <JourneyStep key={step.title} step={step} index={index} />
             ))}
           </ol>
         </div>

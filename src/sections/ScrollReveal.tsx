@@ -10,7 +10,7 @@ export function ScrollReveal({
 }) {
   const reducedMotion = useReducedMotion();
   const group = useRef<HTMLDivElement>(null);
-  const entered = useInView(group, { once: true, amount: "some", margin: "0px 0px -10% 0px" });
+  const entered = useInView(group, { once: true, amount: 0.22 });
 
   if (stagger) {
     return (

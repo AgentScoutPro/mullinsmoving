@@ -8,7 +8,12 @@ export function ChapterFourServe() {
       staggerCopy
       id="story"
       titleId="chapter-four-title"
-      media={{ image: crew, description: "Mullins Moving crew with a customer", position: "center 36%" }}
+      media={{
+        image: crew,
+        description: "Mullins Moving crew with a customer",
+        position: "center 36%",
+        photoMotion: "portrait",
+      }}
       imageFirst
     >
       <p className="section-eyebrow">Our Why</p>
