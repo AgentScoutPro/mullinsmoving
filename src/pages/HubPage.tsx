@@ -1,18 +1,30 @@
 import { ScrollReveal } from "../sections/ScrollReveal";
-import { SceneVisual } from "../sections/EditorialScene";
+import { EditorialScene, SceneVisual, type SceneMedia } from "../sections/EditorialScene";
 import servicesPhoto from "../assets/mullins-organized-truck-poster.webp";
 import localPhoto from "../assets/east-valley-arrival.webp";
 import truckPhoto from "../assets/mullins-truck.webp";
 import internationalPhoto from "../assets/loading-boxes.webp";
+import packingPhoto from "../assets/packing-dishes.webp";
+import consultationPhoto from "../assets/customer-handshake.webp";
+import patioPhoto from "../assets/mesa-patio.webp";
+import skylinePhoto from "../assets/arizona-skyline.webp";
+import loadingPhoto from "../assets/mullins-packing.webp";
+import belongingsPhoto from "../assets/mm-section-2-v2.webp";
+import relocationPhoto from "../assets/mm-section-7-global.webp";
+import crewPhoto from "../assets/mullins-crew.webp";
 import { clientSite, phoneLabel, phoneLink, quoteLink } from "../content";
 import routes from "../hub-routes.json";
 
 type HubPath = Exclude<keyof typeof routes, "/contact">;
 type Detail = { title: string; body: string; href?: string };
+type HubScene = { title: string; body: string; media: SceneMedia };
+
 type Hub = {
   eyebrow: string;
   intro: string;
-  image: string;
+  hero: SceneMedia;
+  feature: HubScene;
+  closing: HubScene;
   heading: string;
   details: Detail[];
   next?: Detail[];
@@ -28,7 +40,21 @@ const hubs: Record<HubPath, Hub> = {
   "/services": {
     eyebrow: "The Mullins Standard",
     intro: "From protecting a family heirloom to moving an entire office, we help you choose the right level of care for your move.",
-    image: servicesPhoto,
+    hero: {
+      image: servicesPhoto,
+      description: "Wrapped furniture and labeled boxes secured inside a moving truck",
+      video: "/videos/mullins-organized-truck-scroll.mp4",
+    },
+    feature: {
+      title: "Care starts with the first box.",
+      body: "From wrapping dishes to padding furniture and protecting floors, we plan the work around your home and what you need moved. Choose the services that fit your move.",
+      media: { image: packingPhoto, description: "A Mullins mover wraps dishes in packing paper" },
+    },
+    closing: {
+      title: "Tell us what your move needs.",
+      body: "Share your dates, the amount you’re moving, and any pieces that need special care. We’ll help you decide where packing, protection, and placement make the most difference.",
+      media: { image: consultationPhoto, description: "A Mullins team member shakes hands with a customer" },
+    },
     heading: "A move for every chapter.",
     details: [
       { title: "White-glove moving", body: "Plan protection, careful handling, and placement for the items that need extra attention.", href: clientSite + "/white-glove-moving-service" },
@@ -43,7 +69,17 @@ const hubs: Record<HubPath, Hub> = {
   "/service-areas": {
     eyebrow: "Arizona Is Home",
     intro: "Whether you’re moving across Gilbert or across the Valley, start with the crew that calls Arizona home.",
-    image: localPhoto,
+    hero: { image: localPhoto, description: "", position: "66% center" },
+    feature: {
+      title: "Every neighborhood has its details.",
+      body: "A gated community, a downtown loading zone, and a home with a long driveway each call for a different plan. Tell us about parking, gate access, stairs, and any building rules when you request your estimate.",
+      media: { image: patioPhoto, description: "" },
+    },
+    closing: {
+      title: "Moving across the Valley?",
+      body: "Tell us where you’re starting, where you’re headed, and when you need to move. We’ll use those details to plan for both homes.",
+      media: { image: skylinePhoto, description: "" },
+    },
     heading: "Find your city.",
     details: [
       { title: "Gilbert", body: "Including Agritopia, Val Vista Lakes, and Morrison Ranch.", href: clientSite + "/moving-to-gilbert-arizona" },
@@ -59,7 +95,17 @@ const hubs: Record<HubPath, Hub> = {
   "/long-distance-moving": {
     eyebrow: "Across State Lines",
     intro: "Move from the Phoenix area with a dedicated truck, one team, and a written quote for the inventory and services you agree on.",
-    image: truckPhoto,
+    hero: { image: truckPhoto, description: "Mullins Moving truck", position: "66% center" },
+    feature: {
+      title: "Your own truck. A clear plan.",
+      body: "Before the truck leaves Arizona, we confirm your inventory, what needs extra protection, and how the crew will access both homes. Your written quote lays out the services you’ve agreed on.",
+      media: { image: loadingPhoto, description: "A Mullins mover loads wrapped furniture into a truck", position: "center 44%" },
+    },
+    closing: {
+      title: "Plan for the day you arrive.",
+      body: "Tell us which rooms the furniture belongs in and what needs reassembly. We’ll account for those details alongside the delivery window and access at your new address.",
+      media: { image: belongingsPhoto, description: "Movers carry a framed family portrait inside a home", position: "72% center" },
+    },
     heading: "What to expect on an interstate move.",
     details: [
       { title: "Start with the details", body: "Share both addresses, your dates, access conditions, inventory, and packing needs." },
@@ -72,7 +118,17 @@ const hubs: Record<HubPath, Hub> = {
   "/international-moving": {
     eyebrow: "Across Borders",
     intro: "Planning an overseas move? Tell us where you’re headed, what you’re taking, and when you need to arrive. We’ll discuss your options and the next steps for your route.",
-    image: internationalPhoto,
+    hero: { image: internationalPhoto, description: "", position: "66% center" },
+    feature: {
+      title: "Start with your destination.",
+      body: "Your destination, household inventory, and arrival window shape the conversation. Bring those details so we can discuss the arrangements available for your route.",
+      media: { image: relocationPhoto, description: "" },
+    },
+    closing: {
+      title: "Talk through the route with us.",
+      body: "Bring your questions about timing, packing, paperwork, and who handles each stage. We’ll help you work through the next steps for the route you’re considering.",
+      media: { image: crewPhoto, description: "Mullins Moving crew with a customer", position: "center 36%" },
+    },
     heading: "What to bring to your consultation.",
     details: [
       { title: "Your origin and destination", body: "Share your pickup city and your destination country and city, even if the final address is still open." },
@@ -93,16 +149,8 @@ export function HubPage({ path }: { path: HubPath }) {
   return (
     <main className="hub-page" id="main-content">
       <section className="hub-hero" aria-labelledby="hub-title">
-        {path === "/services" ? (
-          <SceneVisual
-            image={hub.image}
-            description="Wrapped furniture and labeled boxes secured inside a moving truck"
-            video="/videos/mullins-organized-truck-scroll.mp4"
-          />
-        ) : (
-          <img src={hub.image} alt="" fetchPriority="high" />
-        )}
-        <ScrollReveal className="hub-width">
+        <SceneVisual photoMotion="story" {...hub.hero} priority />
+        <ScrollReveal className="hub-width hub-hero-copy" stagger>
           <nav className="hub-breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">{routes[path].title}</span>
           </nav>
@@ -115,6 +163,15 @@ export function HubPage({ path }: { path: HubPath }) {
           </div>
         </ScrollReveal>
       </section>
+      <EditorialScene
+        titleId="hub-feature"
+        media={{ photoMotion: "story", ...hub.feature.media }}
+        imageFirst
+        staggerCopy
+      >
+        <h2 id="hub-feature">{hub.feature.title}</h2>
+        <p>{hub.feature.body}</p>
+      </EditorialScene>
       <section className="hub-width hub-section" aria-labelledby="hub-details">
         <h2 id="hub-details">{hub.heading}</h2>
         <ScrollReveal className="hub-grid">
@@ -140,10 +197,21 @@ export function HubPage({ path }: { path: HubPath }) {
           ))}
         </ScrollReveal>
         <div className="hub-actions">
-          <a className="button button-primary" href={quoteLink}>Request Your Free Estimate</a>
-          <a className="pillar-link" href={clientSite + "/faq"}>Moving FAQs</a>
+          <a className="text-cta" href={clientSite + "/faq"}>Moving FAQs</a>
         </div>
       </section>
+      <EditorialScene
+        titleId="hub-closing"
+        media={{ photoMotion: "portrait", ...hub.closing.media }}
+        staggerCopy
+      >
+        <h2 id="hub-closing">{hub.closing.title}</h2>
+        <p>{hub.closing.body}</p>
+        <div className="consultation-actions">
+          <a className="button button-primary" href={quoteLink}>Request Your Free Estimate</a>
+          <a className="text-cta" href={phoneLink}>Call {phoneLabel}</a>
+        </div>
+      </EditorialScene>
     </main>
   );
 }

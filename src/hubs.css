@@ -12,6 +12,11 @@
   padding: clamp(3rem, 9vw, 8rem) 0;
 }
 
+.hub-hero-copy {
+  --copy-start-opacity: .72;
+  --copy-lift: 18px;
+}
+
 .hub-hero > img,
 .hub-hero::before {
   position: absolute;

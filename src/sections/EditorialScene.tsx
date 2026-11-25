@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { motion, useInView, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
 
-type SceneMedia = {
+export type SceneMedia = {
   image: string;
   description: string;
   video?: string;
@@ -12,8 +12,8 @@ type SceneMedia = {
 };
 
 export function SceneVisual({
-  image, description, video, position = "center", photoMotion, className = "editorial-visual",
-}: SceneMedia & { className?: string }) {
+  image, description, video, position = "center", photoMotion, className = "editorial-visual", priority = false,
+}: SceneMedia & { className?: string; priority?: boolean }) {
   const scene = useRef<HTMLElement>(null);
   const player = useRef<HTMLVideoElement>(null);
   const nearScene = useInView(scene, { margin: "280px 0px", once: true });
@@ -43,7 +43,8 @@ export function SceneVisual({
         data-photo-motion={animatedPhoto}
         src={image}
         alt={description}
-        loading="lazy"
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : undefined}
         decoding="async"
         style={{ objectPosition: position, ...imageMotion }}
       />
